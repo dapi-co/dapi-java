@@ -426,7 +426,6 @@ public class Dapi
                 "\"otp\":\"" + otp + "\",\r\n" +
                 "\"jobID\":\"" + jobID + "\",\r\n" +
                 "\"appSecret\":\"" + appSecret + "\"\n}";
-        //return post("payment/AddBeneficiary");
         return new AddBeneficiary(post("payment/AddBeneficiary"), false);
     }
     public AddBeneficiary resumeAddBeneficiary(String otp, String jobID, boolean sync) throws Exception
