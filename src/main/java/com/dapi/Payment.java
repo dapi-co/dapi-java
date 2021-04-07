@@ -9,6 +9,7 @@ import com.dapi.types.BeneficiaryAddress;
 import com.dapi.types.UserInput;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Optional;
 
 public class Payment {
@@ -18,17 +19,22 @@ public class Payment {
         this.config = config;
     }
 
-    public CreateBeneficiaryResponse createBeneficiary(String tokenID, String userID, String userSecret, BeneficiaryInfo beneficiary, String operationID, UserInput[] userInputs) throws IOException {
+    public CreateBeneficiaryResponse createBeneficiary(String accessToken, String userSecret, BeneficiaryInfo beneficiary, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var bodyObj = new CreateBenefRequest(this.config.getAppKey(), this.config.getAppSecret(),
-                tokenID, userID, userSecret, beneficiary, operationID, userInputs);
+        var bodyObj = new CreateBenefRequest(this.config.getAppSecret(), userSecret, beneficiary,
+                operationID, userInputs);
 
         // Convert the request body to a JSON string
         var bodyJson = DapiRequest.jsonAgent.toJson(bodyObj, CreateBenefRequest.class);
 
+        // Construct the headers needed for this request
+        var headers = new HashMap<String, String>();
+        headers.put("Authorization", "Bearer " + accessToken);
+
         // Make the request and get the response
-        var respJson = DapiRequest.Do(bodyJson);
+        var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + bodyObj.action, headers);
+
 
         // Convert the got response to the wanted response type
         var resp = DapiRequest.jsonAgent.fromJson(respJson, CreateBeneficiaryResponse.class);
@@ -43,17 +49,20 @@ public class Payment {
         return resp;
     }
 
-    public GetBeneficiariesResponse getBeneficiaries(String tokenID, String userID, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+    public GetBeneficiariesResponse getBeneficiaries(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var bodyObj = new GetBenefsRequest(this.config.getAppKey(), this.config.getAppSecret(),
-                tokenID, userID, userSecret, operationID, userInputs);
+        var bodyObj = new GetBenefsRequest(this.config.getAppSecret(), userSecret, operationID, userInputs);
 
         // Convert the request body to a JSON string
         var bodyJson = DapiRequest.jsonAgent.toJson(bodyObj, GetBenefsRequest.class);
 
+        // Construct the headers needed for this request
+        var headers = new HashMap<String, String>();
+        headers.put("Authorization", "Bearer " + accessToken);
+
         // Make the request and get the response
-        var respJson = DapiRequest.Do(bodyJson);
+        var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + bodyObj.action, headers);
 
         // Convert the got response to the wanted response type
         var resp = DapiRequest.jsonAgent.fromJson(respJson, GetBeneficiariesResponse.class);
@@ -68,17 +77,21 @@ public class Payment {
         return resp;
     }
 
-    public CreateTransferResponse createTransfer(String tokenID, String userID, String userSecret, Transfer transfer, String operationID, UserInput[] userInputs) throws IOException {
+    public CreateTransferResponse createTransfer(String accessToken, String userSecret, Transfer transfer, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var bodyObj = new CreateTransferRequest(this.config.getAppKey(), this.config.getAppSecret(),
-                tokenID, userID, userSecret, transfer, operationID, userInputs);
+        var body = new CreateTransferRequest(this.config.getAppSecret(), userSecret, transfer,
+                operationID, userInputs);
 
         // Convert the request body to a JSON string
-        var bodyJson = DapiRequest.jsonAgent.toJson(bodyObj, CreateTransferRequest.class);
+        var bodyJson = DapiRequest.jsonAgent.toJson(body, CreateTransferRequest.class);
+
+        // Construct the headers needed for this request
+        var headers = new HashMap<String, String>();
+        headers.put("Authorization", "Bearer " + accessToken);
 
         // Make the request and get the response
-        var respJson = DapiRequest.Do(bodyJson);
+        var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
 
         // Convert the got response to the wanted response type
         var resp = DapiRequest.jsonAgent.fromJson(respJson, CreateTransferResponse.class);
@@ -93,18 +106,21 @@ public class Payment {
         return resp;
     }
 
-    public TransferAutoflowResponse transferAutoflow(String tokenID, String userID, String userSecret, TransferAutoflow transferAutoflow, String operationID, UserInput[] userInputs) throws IOException {
+    public TransferAutoflowResponse transferAutoflow(String accessToken, String userSecret, TransferAutoflow transferAutoflow, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var bodyObj = new TransferAutoflowRequest(this.config.getBundleID(), this.config.getAppKey(),
-                this.config.getAppSecret(), tokenID, userID, userSecret, transferAutoflow,
+        var body = new TransferAutoflowRequest(this.config.getAppSecret(), userSecret, transferAutoflow,
                 operationID, userInputs);
 
         // Convert the request body to a JSON string
-        var bodyJson = DapiRequest.jsonAgent.toJson(bodyObj, TransferAutoflowRequest.class);
+        var bodyJson = DapiRequest.jsonAgent.toJson(body, TransferAutoflowRequest.class);
+
+        // Construct the headers needed for this request
+        var headers = new HashMap<String, String>();
+        headers.put("Authorization", "Bearer " + accessToken);
 
         // Make the request and get the response
-        var respJson = DapiRequest.Do(bodyJson);
+        var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
 
         // Convert the got response to the wanted response type
         var resp = DapiRequest.jsonAgent.fromJson(respJson, TransferAutoflowResponse.class);
@@ -171,14 +187,32 @@ public class Payment {
     }
 
     public static class TransferAutoflow {
+        private final String bundleID;
+        private final String appKey;
+        private final String userID;
         private final String senderID;
         private final float amount;
         private final BeneficiaryInfo beneficiary;
 
-        public TransferAutoflow(String senderID, float amount, BeneficiaryInfo beneficiary) {
+        public TransferAutoflow(String bundleID, String appKey, String userID, String senderID, float amount, BeneficiaryInfo beneficiary) {
+            this.bundleID = bundleID;
+            this.appKey = appKey;
+            this.userID = userID;
             this.senderID = senderID;
             this.amount = amount;
             this.beneficiary = beneficiary;
+        }
+
+        public String getBundleID() {
+            return bundleID;
+        }
+
+        public String getAppKey() {
+            return appKey;
+        }
+
+        public String getUserID() {
+            return userID;
         }
 
         public String getSenderID() {
@@ -339,15 +373,12 @@ public class Payment {
         private final String nickname;
         private final String routingNumber;
 
-        public CreateBenefRequest(String appKey,
-                                  String appSecret,
-                                  String tokenID,
-                                  String userID,
+        public CreateBenefRequest(String appSecret,
                                   String userSecret,
                                   BeneficiaryInfo beneficiary,
                                   String operationID,
                                   UserInput[] userInputs) {
-            super(appKey, appSecret, tokenID, userID, userSecret, operationID, userInputs);
+            super(appSecret, userSecret, operationID, userInputs);
             this.name = beneficiary.name;
             this.accountNumber = beneficiary.accountNumber;
             this.iban = beneficiary.iban;
@@ -368,14 +399,11 @@ public class Payment {
     private static class GetBenefsRequest extends DapiRequest.BaseRequest {
         private final String action = "/payment/beneficiaries/get";
 
-        public GetBenefsRequest(String appKey,
-                                String appSecret,
-                                String tokenID,
-                                String userID,
+        public GetBenefsRequest(String appSecret,
                                 String userSecret,
                                 String operationID,
                                 UserInput[] userInputs) {
-            super(appKey, appSecret, tokenID, userID, userSecret, operationID, userInputs);
+            super(appSecret, userSecret, operationID, userInputs);
         }
     }
 
@@ -388,15 +416,12 @@ public class Payment {
         private final String iban;
         private final String accountNumber;
 
-        public CreateTransferRequest(String appKey,
-                                     String appSecret,
-                                     String tokenID,
-                                     String userID,
+        public CreateTransferRequest(String appSecret,
                                      String userSecret,
                                      Transfer transfer,
                                      String operationID,
                                      UserInput[] userInputs) {
-            super(appKey, appSecret, tokenID, userID, userSecret, operationID, userInputs);
+            super(appSecret, userSecret, operationID, userInputs);
             this.senderID = transfer.senderID;
             this.amount = transfer.amount;
             this.receiverID = transfer.receiverID;
@@ -409,21 +434,19 @@ public class Payment {
     private static class TransferAutoflowRequest extends DapiRequest.BaseRequest {
         private final String action = "/payment/transfer/autoflow";
         private final String bundleID;
+        private final String appKey;
         private final String senderID;
         private final float amount;
         private final BeneficiaryInfo beneficiary;
 
-        public TransferAutoflowRequest(String bundleID,
-                                       String appKey,
-                                       String appSecret,
-                                       String tokenID,
-                                       String userID,
+        public TransferAutoflowRequest(String appSecret,
                                        String userSecret,
                                        TransferAutoflow transferAutoflow,
                                        String operationID,
                                        UserInput[] userInputs) {
-            super(appKey, appSecret, tokenID, userID, userSecret, operationID, userInputs);
-            this.bundleID = bundleID;
+            super(appSecret, userSecret, operationID, userInputs);
+            this.bundleID = transferAutoflow.bundleID;
+            this.appKey = transferAutoflow.appKey;
             this.senderID = transferAutoflow.senderID;
             this.amount = transferAutoflow.amount;
             this.beneficiary = transferAutoflow.beneficiary;

@@ -12,17 +12,16 @@ public class Auth {
         this.config = config;
     }
 
-    public ExchangeTokenResponse exchangeToken(String tokenID, String accessCode, String connectionID) throws IOException {
+    public ExchangeTokenResponse exchangeToken(String accessCode, String connectionID) throws IOException {
 
         // Create the request body of this call
-        var bodyObj = new ExchangeTokenRequest(this.config.getAppKey(), this.config.getAppSecret(),
-                tokenID, accessCode, connectionID);
+        var body = new ExchangeTokenRequest(this.config.getAppSecret(), accessCode, connectionID);
 
         // Convert the request body to a JSON string
-        var bodyJson = DapiRequest.jsonAgent.toJson(bodyObj, ExchangeTokenRequest.class);
+        var bodyJson = DapiRequest.jsonAgent.toJson(body, ExchangeTokenRequest.class);
 
         // Make the request and get the response
-        var respJson = DapiRequest.Do(bodyJson);
+        var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action);
 
         // Convert the got response to the wanted response type
         var resp = DapiRequest.jsonAgent.fromJson(respJson, ExchangeTokenResponse.class);
@@ -39,16 +38,12 @@ public class Auth {
 
     private static class ExchangeTokenRequest {
         private final String action = "/auth/ExchangeToken";
-        private final String appKey;
         private final String appSecret;
-        private final String tokenID;
         private final String accessCode;
         private final String connectionID;
 
-        public ExchangeTokenRequest(String appKey, String appSecret, String tokenID, String accessCode, String connectionID) {
-            this.appKey = appKey;
+        public ExchangeTokenRequest(String appSecret, String accessCode, String connectionID) {
             this.appSecret = appSecret;
-            this.tokenID = tokenID;
             this.accessCode = accessCode;
             this.connectionID = connectionID;
         }

@@ -9,6 +9,7 @@ import com.dapi.types.UserInput;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 
 
 public class Data {
@@ -18,17 +19,20 @@ public class Data {
         this.config = config;
     }
 
-    GetIdentityResponse getIdentity(String tokenID, String userID, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+    GetIdentityResponse getIdentity(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var bodyObj = new GetIdentityRequest(this.config.getAppKey(), this.config.getAppSecret(),
-                tokenID, userID, userSecret, operationID, userInputs);
+        var body = new GetIdentityRequest(this.config.getAppSecret(), userSecret, operationID, userInputs);
 
         // Convert the request body to a JSON string
-        var bodyJson = DapiRequest.jsonAgent.toJson(bodyObj, GetIdentityRequest.class);
+        var bodyJson = DapiRequest.jsonAgent.toJson(body, GetIdentityRequest.class);
+
+        // Construct the headers needed for this request
+        var headers = new HashMap<String, String>();
+        headers.put("Authorization", "Bearer " + accessToken);
 
         // Make the request and get the response
-        var respJson = DapiRequest.Do(bodyJson);
+        var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
 
         // Convert the got response to the wanted response type
         var resp = DapiRequest.jsonAgent.fromJson(respJson, GetIdentityResponse.class);
@@ -43,17 +47,20 @@ public class Data {
         return resp;
     }
 
-    GetAccountsResponse getAccounts(String tokenID, String userID, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+    GetAccountsResponse getAccounts(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var bodyObj = new GetAccountsRequest(this.config.getAppKey(), this.config.getAppSecret(),
-                tokenID, userID, userSecret, operationID, userInputs);
+        var body = new GetAccountsRequest(this.config.getAppSecret(), userSecret, operationID, userInputs);
 
         // Convert the request body to a JSON string
-        var bodyJson = DapiRequest.jsonAgent.toJson(bodyObj, GetAccountsRequest.class);
+        var bodyJson = DapiRequest.jsonAgent.toJson(body, GetAccountsRequest.class);
+
+        // Construct the headers needed for this request
+        var headers = new HashMap<String, String>();
+        headers.put("Authorization", "Bearer " + accessToken);
 
         // Make the request and get the response
-        var respJson = DapiRequest.Do(bodyJson);
+        var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
 
         // Convert the got response to the wanted response type
         var resp = DapiRequest.jsonAgent.fromJson(respJson, GetAccountsResponse.class);
@@ -68,17 +75,21 @@ public class Data {
         return resp;
     }
 
-    GetBalanceResponse getBalance(String tokenID, String userID, String userSecret, String accountID, String operationID, UserInput[] userInputs) throws IOException {
+    GetBalanceResponse getBalance(String accessToken, String userSecret, String accountID, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var bodyObj = new GetBalanceRequest(this.config.getAppKey(), this.config.getAppSecret(),
-                tokenID, userID, userSecret, accountID, operationID, userInputs);
+        var body = new GetBalanceRequest(this.config.getAppSecret(), userSecret, accountID,
+                operationID, userInputs);
 
         // Convert the request body to a JSON string
-        var bodyJson = DapiRequest.jsonAgent.toJson(bodyObj, GetBalanceRequest.class);
+        var bodyJson = DapiRequest.jsonAgent.toJson(body, GetBalanceRequest.class);
+
+        // Construct the headers needed for this request
+        var headers = new HashMap<String, String>();
+        headers.put("Authorization", "Bearer " + accessToken);
 
         // Make the request and get the response
-        var respJson = DapiRequest.Do(bodyJson);
+        var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
 
         // Convert the got response to the wanted response type
         var resp = DapiRequest.jsonAgent.fromJson(respJson, GetBalanceResponse.class);
@@ -93,17 +104,21 @@ public class Data {
         return resp;
     }
 
-    GetTransactionsResponse getTransactions(String tokenID, String userID, String userSecret, String accountID, LocalDate fromDate, LocalDate toDate, String operationID, UserInput[] userInputs) throws IOException {
+    GetTransactionsResponse getTransactions(String accessToken, String userSecret, String accountID, LocalDate fromDate, LocalDate toDate, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var bodyObj = new GetTransactionsRequest(this.config.getAppKey(), this.config.getAppSecret(),
-                tokenID, userID, userSecret, accountID, fromDate, toDate, operationID, userInputs);
+        var body = new GetTransactionsRequest(this.config.getAppSecret(), userSecret, accountID,
+                fromDate, toDate, operationID, userInputs);
 
         // Convert the request body to a JSON string
-        var bodyJson = DapiRequest.jsonAgent.toJson(bodyObj, GetTransactionsRequest.class);
+        var bodyJson = DapiRequest.jsonAgent.toJson(body, GetTransactionsRequest.class);
+
+        // Construct the headers needed for this request
+        var headers = new HashMap<String, String>();
+        headers.put("Authorization", "Bearer " + accessToken);
 
         // Make the request and get the response
-        var respJson = DapiRequest.Do(bodyJson);
+        var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
 
         // Convert the got response to the wanted response type
         var resp = DapiRequest.jsonAgent.fromJson(respJson, GetTransactionsResponse.class);
@@ -121,16 +136,16 @@ public class Data {
     private static class GetIdentityRequest extends DapiRequest.BaseRequest {
         final private String action = "/data/identity/get";
 
-        public GetIdentityRequest(String appKey, String appSecret, String tokenID, String userID, String userSecret, String operationID, UserInput[] userInputs) {
-            super(appKey, appSecret, tokenID, userID, userSecret, operationID, userInputs);
+        public GetIdentityRequest(String appSecret, String userSecret, String operationID, UserInput[] userInputs) {
+            super(appSecret, userSecret, operationID, userInputs);
         }
     }
 
     private static class GetAccountsRequest extends DapiRequest.BaseRequest {
         final private String action = "/data/accounts/get";
 
-        public GetAccountsRequest(String appKey, String appSecret, String tokenID, String userID, String userSecret, String operationID, UserInput[] userInputs) {
-            super(appKey, appSecret, tokenID, userID, userSecret, operationID, userInputs);
+        public GetAccountsRequest(String appSecret, String userSecret, String operationID, UserInput[] userInputs) {
+            super(appSecret, userSecret, operationID, userInputs);
         }
     }
 
@@ -138,8 +153,8 @@ public class Data {
         private final String action = "/data/balance/get";
         private final String accountID;
 
-        public GetBalanceRequest(String appKey, String appSecret, String tokenID, String userID, String userSecret, String accountID, String operationID, UserInput[] userInputs) {
-            super(appKey, appSecret, tokenID, userID, userSecret, operationID, userInputs);
+        public GetBalanceRequest(String appSecret, String userSecret, String accountID, String operationID, UserInput[] userInputs) {
+            super(appSecret, userSecret, operationID, userInputs);
             this.accountID = accountID;
         }
     }
@@ -152,8 +167,8 @@ public class Data {
 
         private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        public GetTransactionsRequest(String appKey, String appSecret, String tokenID, String userID, String userSecret, String accountID, LocalDate fromDate, LocalDate toDate, String operationID, UserInput[] userInputs) {
-            super(appKey, appSecret, tokenID, userID, userSecret, operationID, userInputs);
+        public GetTransactionsRequest(String appSecret, String userSecret, String accountID, LocalDate fromDate, LocalDate toDate, String operationID, UserInput[] userInputs) {
+            super(appSecret, userSecret, operationID, userInputs);
             this.accountID = accountID;
             this.fromDate = dateFormatter.format(fromDate);
             this.toDate = dateFormatter.format(toDate);

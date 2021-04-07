@@ -4,6 +4,7 @@ import com.dapi.response.GetAccountsMetadataResponse;
 import com.dapi.types.UserInput;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 
 public class Metadata {
@@ -13,17 +14,21 @@ public class Metadata {
         this.config = config;
     }
 
-    public GetAccountsMetadataResponse getAccountsMetadata(String tokenID, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+    public GetAccountsMetadataResponse getAccountsMetadata(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var bodyObj = new GetAccountsMetadataRequest(this.config.getAppKey(), this.config.getAppSecret(),
-                tokenID, userSecret, operationID, userInputs);
+        var body = new GetAccountsMetadataRequest(this.config.getAppSecret(), userSecret, operationID, userInputs);
 
         // Convert the body map to a JSON string
-        var bodyJson = DapiRequest.jsonAgent.toJson(bodyObj, GetAccountsMetadataRequest.class);
+        var bodyJson = DapiRequest.jsonAgent.toJson(body, GetAccountsMetadataRequest.class);
+
+        // Construct the headers needed for this request
+        var headers = new HashMap<String, String>();
+        headers.put("Authorization", "Bearer " + accessToken);
 
         // Make the request and get the response
-        var respJson = DapiRequest.Do(bodyJson);
+        var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
+
 
         // Convert the got response to the wanted response type
         var resp = DapiRequest.jsonAgent.fromJson(respJson, GetAccountsMetadataResponse.class);
@@ -41,8 +46,8 @@ public class Metadata {
     private static class GetAccountsMetadataRequest extends DapiRequest.BaseRequest {
         private final String action = "/metadata/accounts/get";
 
-        public GetAccountsMetadataRequest(String appKey, String appSecret, String tokenID, String userSecret, String operationID, UserInput[] userInputs) {
-            super(appKey, appSecret, tokenID, null, userSecret, operationID, userInputs);
+        public GetAccountsMetadataRequest(String appSecret, String userSecret, String operationID, UserInput[] userInputs) {
+            super(appSecret, userSecret, operationID, userInputs);
         }
     }
 }
