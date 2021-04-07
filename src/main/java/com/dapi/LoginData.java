@@ -11,6 +11,12 @@ public class LoginData {
         this.connectionID = connectionID;
     }
 
+    public LoginData(String userSecret) {
+        this.userSecret = userSecret;
+        this.accessCode = null;
+        this.connectionID = null;
+    }
+
     public String getUserSecret() {
         return userSecret;
     }
