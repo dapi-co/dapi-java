@@ -19,10 +19,10 @@ public class Payment {
         this.config = config;
     }
 
-    public CreateBeneficiaryResponse createBeneficiary(String accessToken, String userSecret, BeneficiaryInfo beneficiary, String operationID, UserInput[] userInputs) throws IOException {
+    public CreateBeneficiaryResponse createBeneficiary(BeneficiaryInfo beneficiary, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var bodyObj = new CreateBenefRequest(this.config.getAppSecret(), userSecret, beneficiary,
+        var bodyObj = new CreateBenefRequest(beneficiary, this.config.getAppSecret(), userSecret,
                 operationID, userInputs);
 
         // Convert the request body to a JSON string
@@ -77,10 +77,10 @@ public class Payment {
         return resp;
     }
 
-    public CreateTransferResponse createTransfer(String accessToken, String userSecret, Transfer transfer, String operationID, UserInput[] userInputs) throws IOException {
+    public CreateTransferResponse createTransfer(Transfer transfer, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var body = new CreateTransferRequest(this.config.getAppSecret(), userSecret, transfer,
+        var body = new CreateTransferRequest(transfer, this.config.getAppSecret(), userSecret,
                 operationID, userInputs);
 
         // Convert the request body to a JSON string
@@ -106,10 +106,10 @@ public class Payment {
         return resp;
     }
 
-    public TransferAutoflowResponse transferAutoflow(String accessToken, String userSecret, TransferAutoflow transferAutoflow, String operationID, UserInput[] userInputs) throws IOException {
+    public TransferAutoflowResponse transferAutoflow(TransferAutoflow transferAutoflow, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var body = new TransferAutoflowRequest(this.config.getAppSecret(), userSecret, transferAutoflow,
+        var body = new TransferAutoflowRequest(transferAutoflow, this.config.getAppSecret(), userSecret,
                 operationID, userInputs);
 
         // Convert the request body to a JSON string
@@ -373,9 +373,9 @@ public class Payment {
         private final String nickname;
         private final String routingNumber;
 
-        public CreateBenefRequest(String appSecret,
+        public CreateBenefRequest(BeneficiaryInfo beneficiary,
+                                  String appSecret,
                                   String userSecret,
-                                  BeneficiaryInfo beneficiary,
                                   String operationID,
                                   UserInput[] userInputs) {
             super(appSecret, userSecret, operationID, userInputs);
@@ -416,9 +416,9 @@ public class Payment {
         private final String iban;
         private final String accountNumber;
 
-        public CreateTransferRequest(String appSecret,
+        public CreateTransferRequest(Transfer transfer,
+                                     String appSecret,
                                      String userSecret,
-                                     Transfer transfer,
                                      String operationID,
                                      UserInput[] userInputs) {
             super(appSecret, userSecret, operationID, userInputs);
@@ -439,9 +439,9 @@ public class Payment {
         private final float amount;
         private final BeneficiaryInfo beneficiary;
 
-        public TransferAutoflowRequest(String appSecret,
+        public TransferAutoflowRequest(TransferAutoflow transferAutoflow,
+                                       String appSecret,
                                        String userSecret,
-                                       TransferAutoflow transferAutoflow,
                                        String operationID,
                                        UserInput[] userInputs) {
             super(appSecret, userSecret, operationID, userInputs);

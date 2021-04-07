@@ -75,10 +75,10 @@ public class Data {
         return resp;
     }
 
-    GetBalanceResponse getBalance(String accessToken, String userSecret, String accountID, String operationID, UserInput[] userInputs) throws IOException {
+    GetBalanceResponse getBalance(String accountID, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var body = new GetBalanceRequest(this.config.getAppSecret(), userSecret, accountID,
+        var body = new GetBalanceRequest(accountID, this.config.getAppSecret(), userSecret,
                 operationID, userInputs);
 
         // Convert the request body to a JSON string
@@ -104,11 +104,11 @@ public class Data {
         return resp;
     }
 
-    GetTransactionsResponse getTransactions(String accessToken, String userSecret, String accountID, LocalDate fromDate, LocalDate toDate, String operationID, UserInput[] userInputs) throws IOException {
+    GetTransactionsResponse getTransactions(String accountID, LocalDate fromDate, LocalDate toDate, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var body = new GetTransactionsRequest(this.config.getAppSecret(), userSecret, accountID,
-                fromDate, toDate, operationID, userInputs);
+        var body = new GetTransactionsRequest(accountID, fromDate, toDate, this.config.getAppSecret(),
+                userSecret, operationID, userInputs);
 
         // Convert the request body to a JSON string
         var bodyJson = DapiRequest.jsonAgent.toJson(body, GetTransactionsRequest.class);
@@ -153,7 +153,7 @@ public class Data {
         private final String action = "/data/balance/get";
         private final String accountID;
 
-        public GetBalanceRequest(String appSecret, String userSecret, String accountID, String operationID, UserInput[] userInputs) {
+        public GetBalanceRequest(String accountID, String appSecret, String userSecret, String operationID, UserInput[] userInputs) {
             super(appSecret, userSecret, operationID, userInputs);
             this.accountID = accountID;
         }
@@ -167,7 +167,7 @@ public class Data {
 
         private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        public GetTransactionsRequest(String appSecret, String userSecret, String accountID, LocalDate fromDate, LocalDate toDate, String operationID, UserInput[] userInputs) {
+        public GetTransactionsRequest(String accountID, LocalDate fromDate, LocalDate toDate, String appSecret, String userSecret, String operationID, UserInput[] userInputs) {
             super(appSecret, userSecret, operationID, userInputs);
             this.accountID = accountID;
             this.fromDate = dateFormatter.format(fromDate);
