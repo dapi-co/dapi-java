@@ -8,7 +8,6 @@ public class Account {
     private final String id;
     private final boolean isFavourite;
     private final Currency currency;
-    private final Balance balance;
 
     public Account(String name, String iban, String number, AccountType type, String id, boolean isFavourite, Currency currency, Balance balance) {
         this.name = name;
@@ -18,7 +17,6 @@ public class Account {
         this.id = id;
         this.isFavourite = isFavourite;
         this.currency = currency;
-        this.balance = balance;
     }
 
     public String getName() {
@@ -47,10 +45,6 @@ public class Account {
 
     public Currency getCurrency() {
         return currency;
-    }
-
-    public Balance getBalance() {
-        return balance;
     }
 
     public enum AccountType {
