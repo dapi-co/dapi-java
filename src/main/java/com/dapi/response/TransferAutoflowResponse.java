@@ -4,15 +4,15 @@ import com.dapi.types.Range;
 
 import java.util.Optional;
 
-public class CreateTransferResponse extends BaseResponse {
+public class TransferAutoflowResponse extends BaseResponse {
     private String reference;
     private Range coolDownPeriod;
 
-    CreateTransferResponse() {
+    TransferAutoflowResponse() {
         super();
     }
 
-    public CreateTransferResponse(String errType, String errMsg) {
+    public TransferAutoflowResponse(String errType, String errMsg) {
         super(errType, errMsg);
     }
 

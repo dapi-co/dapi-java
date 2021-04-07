@@ -47,14 +47,24 @@ public class DapiApp {
                 this.loginData.getUserSecret(), accountID, fromDate, toDate, operationID, userInputs);
     }
 
+    public CreateBeneficiaryResponse createBeneficiary(Payment.BeneficiaryInfo beneficiary, String operationID, UserInput[] userInputs) throws IOException {
+        return this.p.createBeneficiary(this.loginData.getTokenID(), this.loginData.getUserID(),
+                this.loginData.getUserSecret(), beneficiary, operationID, userInputs);
+    }
+
     public GetBeneficiariesResponse getBeneficiaries(String operationID, UserInput[] userInputs) throws IOException {
         return this.p.getBeneficiaries(this.loginData.getTokenID(), this.loginData.getUserID(),
                 this.loginData.getUserSecret(), operationID, userInputs);
     }
 
-    public CreateTransferResponse createTransfer(Payment.Transfer transfer, String hlAPIStep, String operationID, UserInput[] userInputs) throws IOException {
+    public CreateTransferResponse createTransfer(Payment.Transfer transfer, String operationID, UserInput[] userInputs) throws IOException {
         return this.p.createTransfer(this.loginData.getTokenID(), this.loginData.getUserID(),
-                this.loginData.getUserSecret(), transfer, hlAPIStep, operationID, userInputs);
+                this.loginData.getUserSecret(), transfer, operationID, userInputs);
+    }
+
+    public TransferAutoflowResponse transferAutoflow(Payment.TransferAutoflow transferAutoflow, String operationID, UserInput[] userInputs) throws IOException {
+        return this.p.transferAutoflow(this.loginData.getTokenID(), this.loginData.getUserID(),
+                this.loginData.getUserSecret(), transferAutoflow, operationID, userInputs);
     }
 
     public GetAccountsMetadataResponse getAccountsMetadata(String operationID, UserInput[] userInputs) throws IOException {
