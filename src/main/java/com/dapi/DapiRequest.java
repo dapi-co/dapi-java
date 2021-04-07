@@ -14,9 +14,9 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class DapiRequest {
-    public final static String Dapi_URL = "https://api.dapi.co";
+//    public final static String Dapi_URL = "https://api.dapi.co";
     public final static String DD_URL = "https://dd.dapi.co";
-//    public final static String Dapi_URL = "http://127.0.0.1:8090";
+    public final static String Dapi_URL = "http://127.0.0.1:8090";
 //    public final static String DD_URL = "http://127.0.0.1:8095";
 
     final static Gson jsonAgent = new Gson().newBuilder()
@@ -26,6 +26,11 @@ public class DapiRequest {
     private final static OkHttpClient httpClient = new OkHttpClient().newBuilder()
             .readTimeout(2, TimeUnit.MINUTES)
             .build();
+
+
+    public static String HandleSDK(String bodyJson, HashMap<String, String> headersMap) throws IOException {
+        return Do(bodyJson, DD_URL, headersMap);
+    }
 
     public static String Do(String bodyJson, String url) throws IOException {
         return Do(bodyJson, url, new HashMap<>());
