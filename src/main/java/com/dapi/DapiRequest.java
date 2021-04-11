@@ -14,9 +14,9 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class DapiRequest {
-//    public final static String Dapi_URL = "https://api.dapi.co";
+    public final static String Dapi_URL = "https://api.dapi.co";
     public final static String DD_URL = "https://dd.dapi.co";
-    public final static String Dapi_URL = "http://127.0.0.1:8090";
+//    public final static String Dapi_URL = "http://127.0.0.1:8090";
 //    public final static String DD_URL = "http://127.0.0.1:8095";
 
     final static Gson jsonAgent = new Gson().newBuilder()

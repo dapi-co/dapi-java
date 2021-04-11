@@ -1,6 +1,7 @@
 package com.dapi;
 
 import com.dapi.response.ExchangeTokenResponse;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 
@@ -24,10 +25,15 @@ public class Auth {
         var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action);
 
         // Convert the got response to the wanted response type
-        var resp = DapiRequest.jsonAgent.fromJson(respJson, ExchangeTokenResponse.class);
+        ExchangeTokenResponse resp = null;
+        try {
+            resp = DapiRequest.jsonAgent.fromJson(respJson, ExchangeTokenResponse.class);
+        } catch (JsonSyntaxException e) {
+            // Empty catch, cause the handling code is below
+        }
 
         // Check if the got response was of unexpected format, and return a suitable response
-        if (resp == null || resp.getStatus() == null) {
+        if (resp == null || (resp.getStatus() == null && resp.getType().isEmpty())) {
             // If the got response wasn't a JSON string, resp will be null, and if
             // it didn't have the 'status' field, getStatus() will return null.
             return new ExchangeTokenResponse("UNEXPECTED_RESPONSE", "Unexpected response body");

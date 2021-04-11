@@ -7,6 +7,7 @@ import com.dapi.response.TransferAutoflowResponse;
 import com.dapi.types.Beneficiary;
 import com.dapi.types.BeneficiaryAddress;
 import com.dapi.types.UserInput;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -37,10 +38,15 @@ public class Payment {
 
 
         // Convert the got response to the wanted response type
-        var resp = DapiRequest.jsonAgent.fromJson(respJson, CreateBeneficiaryResponse.class);
+        CreateBeneficiaryResponse resp = null;
+        try {
+            resp = DapiRequest.jsonAgent.fromJson(respJson, CreateBeneficiaryResponse.class);
+        } catch (JsonSyntaxException e) {
+            // Empty catch, cause the handling code is below
+        }
 
         // Check if the got response was of unexpected format, and return a suitable response
-        if (resp == null || resp.getStatus() == null) {
+        if (resp == null || (resp.getStatus() == null && resp.getType().isEmpty())) {
             // If the got response wasn't a JSON string, resp will be null, and if
             // it didn't have the 'status' field, getStatus() will return null.
             return new CreateBeneficiaryResponse("UNEXPECTED_RESPONSE", "Unexpected response body");
@@ -65,10 +71,15 @@ public class Payment {
         var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + bodyObj.action, headers);
 
         // Convert the got response to the wanted response type
-        var resp = DapiRequest.jsonAgent.fromJson(respJson, GetBeneficiariesResponse.class);
+        GetBeneficiariesResponse resp = null;
+        try {
+            resp = DapiRequest.jsonAgent.fromJson(respJson, GetBeneficiariesResponse.class);
+        } catch (JsonSyntaxException e) {
+            // Empty catch, cause the handling code is below
+        }
 
         // Check if the got response was of unexpected format, and return a suitable response
-        if (resp == null || resp.getStatus() == null) {
+        if (resp == null || (resp.getStatus() == null && resp.getType().isEmpty())) {
             // If the got response wasn't a JSON string, resp will be null, and if
             // it didn't have the 'status' field, getStatus() will return null.
             return new GetBeneficiariesResponse("UNEXPECTED_RESPONSE", "Unexpected response body");
@@ -94,10 +105,15 @@ public class Payment {
         var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
 
         // Convert the got response to the wanted response type
-        var resp = DapiRequest.jsonAgent.fromJson(respJson, CreateTransferResponse.class);
+        CreateTransferResponse resp = null;
+        try {
+            resp = DapiRequest.jsonAgent.fromJson(respJson, CreateTransferResponse.class);
+        } catch (JsonSyntaxException e) {
+            // Empty catch, cause the handling code is below
+        }
 
         // Check if the got response was of unexpected format, and return a suitable response
-        if (resp == null || resp.getStatus() == null) {
+        if (resp == null || (resp.getStatus() == null && resp.getType().isEmpty())) {
             // If the got response wasn't a JSON string, resp will be null, and if
             // it didn't have the 'status' field, getStatus() will return null.
             return new CreateTransferResponse("UNEXPECTED_RESPONSE", "Unexpected response body");
@@ -123,10 +139,15 @@ public class Payment {
         var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
 
         // Convert the got response to the wanted response type
-        var resp = DapiRequest.jsonAgent.fromJson(respJson, TransferAutoflowResponse.class);
+        TransferAutoflowResponse resp = null;
+        try {
+            resp = DapiRequest.jsonAgent.fromJson(respJson, TransferAutoflowResponse.class);
+        } catch (JsonSyntaxException e) {
+            // Empty catch, cause the handling code is below
+        }
 
         // Check if the got response was of unexpected format, and return a suitable response
-        if (resp == null || resp.getStatus() == null) {
+        if (resp == null || (resp.getStatus() == null && resp.getType().isEmpty())) {
             // If the got response wasn't a JSON string, resp will be null, and if
             // it didn't have the 'status' field, getStatus() will return null.
             return new TransferAutoflowResponse("UNEXPECTED_RESPONSE", "Unexpected response body");

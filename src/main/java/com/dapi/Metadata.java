@@ -2,6 +2,7 @@ package com.dapi;
 
 import com.dapi.response.GetAccountsMetadataResponse;
 import com.dapi.types.UserInput;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -31,10 +32,15 @@ public class Metadata {
 
 
         // Convert the got response to the wanted response type
-        var resp = DapiRequest.jsonAgent.fromJson(respJson, GetAccountsMetadataResponse.class);
+        GetAccountsMetadataResponse resp = null;
+        try {
+            resp = DapiRequest.jsonAgent.fromJson(respJson, GetAccountsMetadataResponse.class);
+        } catch (JsonSyntaxException e) {
+            // Empty catch, cause the handling code is below
+        }
 
         // Check if the got response was of unexpected format, and return a suitable response
-        if (resp == null || resp.getStatus() == null) {
+        if (resp == null || (resp.getStatus() == null && resp.getType().isEmpty())) {
             // If the got response wasn't a JSON string, resp will be null, and if
             // it didn't have the 'status' field, getStatus() will return null.
             return new GetAccountsMetadataResponse("UNEXPECTED_RESPONSE", "Unexpected response body");
