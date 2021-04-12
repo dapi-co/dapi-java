@@ -211,14 +211,16 @@ public class Payment {
         private final String bundleID;
         private final String appKey;
         private final String userID;
+        private final String bankID;
         private final String senderID;
         private final float amount;
         private final BeneficiaryInfo beneficiary;
 
-        public TransferAutoflow(String bundleID, String appKey, String userID, String senderID, float amount, BeneficiaryInfo beneficiary) {
+        public TransferAutoflow(String bundleID, String appKey, String userID, String bankID, String senderID, float amount, BeneficiaryInfo beneficiary) {
             this.bundleID = bundleID;
             this.appKey = appKey;
             this.userID = userID;
+            this.bankID = bankID;
             this.senderID = senderID;
             this.amount = amount;
             this.beneficiary = beneficiary;
@@ -456,6 +458,8 @@ public class Payment {
         private final String action = "/payment/transfer/autoflow";
         private final String bundleID;
         private final String appKey;
+        private final String userID;
+        private final String bankID;
         private final String senderID;
         private final float amount;
         private final BeneficiaryInfo beneficiary;
@@ -468,6 +472,8 @@ public class Payment {
             super(appSecret, userSecret, operationID, userInputs);
             this.bundleID = transferAutoflow.bundleID;
             this.appKey = transferAutoflow.appKey;
+            this.userID = transferAutoflow.userID;
+            this.bankID = transferAutoflow.bankID;
             this.senderID = transferAutoflow.senderID;
             this.amount = transferAutoflow.amount;
             this.beneficiary = transferAutoflow.beneficiary;
