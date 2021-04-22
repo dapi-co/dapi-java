@@ -5,6 +5,7 @@ import java.util.Optional;
 public class ExchangeTokenResponse extends BaseResponse {
     private String accessToken;
     private String tokenID;
+    private String userID;
 
     ExchangeTokenResponse() {
         super();
@@ -20,5 +21,9 @@ public class ExchangeTokenResponse extends BaseResponse {
 
     public Optional<String> getTokenID() {
         return Optional.ofNullable(tokenID);
+    }
+
+    public Optional<String> getUserID() {
+        return Optional.ofNullable(userID);
     }
 }
