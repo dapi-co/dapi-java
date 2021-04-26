@@ -10,6 +10,6 @@
         <name>Kamil Kamili</name>
         <email>kamil@dapi.co</email>
         <organization>Dapi</organization>
-        <organizationUrl>https://www.dapi.com</organizationUrl>
+        <organizationUrl>https://www.dapi.co</organizationUrl>
     </developer>
 </developers>
