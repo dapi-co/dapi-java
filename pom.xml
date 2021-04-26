@@ -92,20 +92,6 @@
     </build>
 
 
-    <profiles>
-        <profile>
-            <id>ossrh</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <gpg.executable>gpg</gpg.executable>
-                <gpg.passphrase>pass-phrase</gpg.passphrase>
-            </properties>
-        </profile>
-    </profiles>
-
-
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
