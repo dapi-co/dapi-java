@@ -14,9 +14,9 @@
 
 
     <scm>
-        <connection>scm:git:git://github.com/dapi/dapi-java.git</connection>
-        <developerConnection>scm:git:git@github.com:dapi/dapi-java.git</developerConnection>
-        <url>http://github.com/dapi/dapi-java</url>
+        <connection>scm:git:git://github.com/dapi-co/dapi-java.git</connection>
+        <developerConnection>scm:git:git@github.com:dapi-co/dapi-java.git</developerConnection>
+        <url>http://github.com/dapi-co/dapi-java</url>
         <tag>HEAD</tag>
     </scm>
 
