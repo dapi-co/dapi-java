@@ -1,5 +1,5 @@
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <groupId>co.dapi</groupId>
     <artifactId>dapi-java</artifactId>
@@ -29,8 +29,8 @@
     <inceptionYear>2021</inceptionYear>
     <licenses>
         <license>
-        <name>The MIT License (MIT)</name>
-        <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <name>The MIT License (MIT)</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
         </license>
     </licenses>
 
@@ -43,7 +43,6 @@
     </properties>
 
     <packaging>jar</packaging>
-
 
 
     <build>
