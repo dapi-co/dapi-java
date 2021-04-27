@@ -1,5 +1,8 @@
 package com.dapi;
 
+import java.util.Optional;
+
+
 public class LoginData {
     private final String userSecret;
     private final String accessCode;
@@ -21,11 +24,11 @@ public class LoginData {
         return userSecret;
     }
 
-    public String getAccessCode() {
-        return accessCode;
+    public Optional<String> getAccessCode() {
+        return Optional.ofNullable(accessCode);
     }
 
-    public String getConnectionID() {
-        return connectionID;
+    public Optional<String> getConnectionID() {
+        return Optional.ofNullable(connectionID);
     }
 }

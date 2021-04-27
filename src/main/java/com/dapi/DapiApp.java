@@ -27,7 +27,7 @@ public class DapiApp {
     }
 
     public ExchangeTokenResponse exchangeToken() throws IOException {
-        return this.a.exchangeToken(this.loginData.getAccessCode(), this.loginData.getConnectionID());
+        return this.a.exchangeToken(this.loginData.getAccessCode().orElse(""), this.loginData.getConnectionID().orElse(""));
     }
 
     public GetIdentityResponse getIdentity(String accessToken, String operationID, UserInput[] userInputs) throws IOException {
