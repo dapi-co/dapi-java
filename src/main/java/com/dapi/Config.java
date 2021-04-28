@@ -1,7 +1,7 @@
 package com.dapi;
 
 public class Config {
-    private String appSecret;
+    private final String appSecret;
 
     public Config(String appSecret) {
         this.appSecret = appSecret;
