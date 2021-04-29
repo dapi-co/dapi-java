@@ -164,6 +164,16 @@ public class Payment {
         private final String iban;
         private final String accountNumber;
 
+        /**
+         * Create an object that holds the info for a transfer from a bank that requires the receiver to be already
+         * registered as a beneficiary to perform a transaction.
+         *
+         * @param senderID   the id of the account we want to send money from.
+         *                   retrieved from one of the accounts array returned from the getAccounts method.
+         * @param amount     the amount of money we want to send.
+         * @param receiverID the id of the beneficiary we want to send money to.
+         *                   retrieved from one of the beneficiaries array returned from the getBeneficiaries method.
+         */
         public Transfer(String senderID, float amount, String receiverID) {
             this.senderID = senderID;
             this.amount = amount;
@@ -173,6 +183,18 @@ public class Payment {
             this.accountNumber = null;
         }
 
+        /**
+         * Create an object that holds the info for a transfer from a bank that handles the creation of beneficiaries
+         * on its own, internally, and doesn't require the receiver to be already registered as a beneficiary to perform
+         * a transaction.
+         *
+         * @param senderID      the id of the account we want to send money from.
+         *                      retrieved from one of the accounts array returned from the getAccounts method.
+         * @param amount        the amount of money we want to send.
+         * @param name          the name of receiver.
+         * @param iban          the IBAN of the receiver's account.
+         * @param accountNumber the Account Number of the receiver's account.
+         */
         public Transfer(String senderID, float amount, String name, String iban, String accountNumber) {
             this.senderID = senderID;
             this.amount = amount;
