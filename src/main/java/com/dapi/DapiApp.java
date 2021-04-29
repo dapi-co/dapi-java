@@ -14,15 +14,13 @@ import java.util.HashMap;
  */
 public class DapiApp {
 
-    private final LoginData loginData;
     private final Config config;
     private final Auth a;
     private final Data d;
     private final Payment p;
     private final Metadata m;
 
-    public DapiApp(Config config, LoginData loginData) {
-        this.loginData = loginData;
+    public DapiApp(Config config) {
         this.config = config;
         this.a = new Auth(config);
         this.d = new Data(config);
@@ -31,124 +29,114 @@ public class DapiApp {
     }
 
     /**
-     * exchangeToken talks to the ExchangeToken endpoint of Dapi, with this {@link DapiApp}'s appSecret and
-     * its user {@link LoginData}.
-     * The {@link LoginData} passed to this {@link DapiApp} instance must contain the accessCode and connectionID,
-     * otherwise this call will return an error.
+     * exchangeToken talks to the ExchangeToken endpoint of Dapi, with this {@link DapiApp}'s appSecret.
      *
+     * @param accessCode   retrieved from user login
+     * @param connectionID retrieved from user login
      * @return an {@link ExchangeTokenResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
-    public ExchangeTokenResponse exchangeToken() throws IOException {
-        return this.a.exchangeToken(this.loginData.getAccessCode().orElse(""), this.loginData.getConnectionID().orElse(""));
+    public ExchangeTokenResponse exchangeToken(String accessCode, String connectionID) throws IOException {
+        return this.a.exchangeToken(accessCode, connectionID);
     }
 
 
     /**
-     * getIdentity talks to the GetIdentity endpoint of Dapi, with this {@link DapiApp}'s appSecret and
-     * its user {@link LoginData}.
+     * getIdentity talks to the GetIdentity endpoint of Dapi, with this {@link DapiApp}'s appSecret.
      *
      * @return a {@link GetIdentityResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
-    public GetIdentityResponse getIdentity(String accessToken, String operationID, UserInput[] userInputs) throws IOException {
-        return this.d.getIdentity(accessToken, this.loginData.getUserSecret(), operationID, userInputs);
+    public GetIdentityResponse getIdentity(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+        return this.d.getIdentity(accessToken, userSecret, operationID, userInputs);
     }
 
 
     /**
-     * getAccounts talks to the GetAccounts endpoint of Dapi, with this {@link DapiApp}'s appSecret and
-     * its user {@link LoginData}.
+     * getAccounts talks to the GetAccounts endpoint of Dapi, with this {@link DapiApp}'s appSecret.
      *
      * @return an {@link GetAccountsResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
-    public GetAccountsResponse getAccounts(String accessToken, String operationID, UserInput[] userInputs) throws IOException {
-        return this.d.getAccounts(accessToken, this.loginData.getUserSecret(), operationID, userInputs);
+    public GetAccountsResponse getAccounts(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+        return this.d.getAccounts(accessToken, userSecret, operationID, userInputs);
     }
 
 
     /**
-     * getBalance talks to the GetBalance endpoint of Dapi, with this {@link DapiApp}'s appSecret and
-     * its user {@link LoginData}.
+     * getBalance talks to the GetBalance endpoint of Dapi, with this {@link DapiApp}'s appSecret.
      *
      * @return an {@link GetBalanceResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
-    public GetBalanceResponse getBalance(String accountID, String accessToken, String operationID, UserInput[] userInputs) throws IOException {
-        return this.d.getBalance(accountID, accessToken, this.loginData.getUserSecret(), operationID, userInputs);
+    public GetBalanceResponse getBalance(String accountID, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+        return this.d.getBalance(accountID, accessToken, userSecret, operationID, userInputs);
     }
 
 
     /**
-     * getTransactions talks to the GetTransactions endpoint of Dapi, with this {@link DapiApp}'s appSecret and
-     * its user {@link LoginData}.
+     * getTransactions talks to the GetTransactions endpoint of Dapi, with this {@link DapiApp}'s appSecret.
      *
      * @return an {@link GetTransactionsResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
-    public GetTransactionsResponse getTransactions(String accountID, LocalDate fromDate, LocalDate toDate, String accessToken, String operationID, UserInput[] userInputs) throws IOException {
-        return this.d.getTransactions(accountID, fromDate, toDate, accessToken, this.loginData.getUserSecret(), operationID, userInputs);
+    public GetTransactionsResponse getTransactions(String accountID, LocalDate fromDate, LocalDate toDate, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+        return this.d.getTransactions(accountID, fromDate, toDate, accessToken, userSecret, operationID, userInputs);
     }
 
 
     /**
-     * createBeneficiary talks to the CreateBeneficiary endpoint of Dapi, with this {@link DapiApp}'s appSecret and
-     * its user {@link LoginData}.
+     * createBeneficiary talks to the CreateBeneficiary endpoint of Dapi, with this {@link DapiApp}'s appSecret.
      *
      * @return an {@link CreateBeneficiaryResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
-    public CreateBeneficiaryResponse createBeneficiary(Payment.BeneficiaryInfo beneficiary, String accessToken, String operationID, UserInput[] userInputs) throws IOException {
-        return this.p.createBeneficiary(beneficiary, accessToken, this.loginData.getUserSecret(), operationID, userInputs);
+    public CreateBeneficiaryResponse createBeneficiary(Payment.BeneficiaryInfo beneficiary, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+        return this.p.createBeneficiary(beneficiary, accessToken, userSecret, operationID, userInputs);
     }
 
 
     /**
-     * getBeneficiaries talks to the GetBeneficiaries endpoint of Dapi, with this {@link DapiApp}'s appSecret and
-     * its user {@link LoginData}.
+     * getBeneficiaries talks to the GetBeneficiaries endpoint of Dapi, with this {@link DapiApp}'s appSecret.
      *
      * @return an {@link GetBeneficiariesResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
-    public GetBeneficiariesResponse getBeneficiaries(String accessToken, String operationID, UserInput[] userInputs) throws IOException {
-        return this.p.getBeneficiaries(accessToken, this.loginData.getUserSecret(), operationID, userInputs);
+    public GetBeneficiariesResponse getBeneficiaries(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+        return this.p.getBeneficiaries(accessToken, userSecret, operationID, userInputs);
     }
 
 
     /**
-     * createTransfer talks to the CreateTransfer endpoint of Dapi, with this {@link DapiApp}'s appSecret and
-     * its user {@link LoginData}.
+     * createTransfer talks to the CreateTransfer endpoint of Dapi, with this {@link DapiApp}'s appSecret.
      *
      * @return an {@link CreateTransferResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
-    public CreateTransferResponse createTransfer(Payment.Transfer transfer, String accessToken, String operationID, UserInput[] userInputs) throws IOException {
-        return this.p.createTransfer(transfer, accessToken, this.loginData.getUserSecret(), operationID, userInputs);
+    public CreateTransferResponse createTransfer(Payment.Transfer transfer, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+        return this.p.createTransfer(transfer, accessToken, userSecret, operationID, userInputs);
     }
 
 
     /**
-     * transferAutoflow talks to the TransferAutoflow endpoint of Dapi, with this {@link DapiApp}'s appSecret and
-     * its user {@link LoginData}.
+     * transferAutoflow talks to the TransferAutoflow endpoint of Dapi, with this {@link DapiApp}'s appSecret.
      *
      * @return an {@link TransferAutoflowResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
-    public TransferAutoflowResponse transferAutoflow(Payment.TransferAutoflow transferAutoflow, String accessToken, String operationID, UserInput[] userInputs) throws IOException {
-        return this.p.transferAutoflow(transferAutoflow, accessToken, this.loginData.getUserSecret(), operationID, userInputs);
+    public TransferAutoflowResponse transferAutoflow(Payment.TransferAutoflow transferAutoflow, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+        return this.p.transferAutoflow(transferAutoflow, accessToken, userSecret, operationID, userInputs);
     }
 
 
     /**
-     * getAccountsMetadata talks to the GetAccountsMetadata endpoint of Dapi, with this {@link DapiApp}'s appSecret and
-     * its user {@link LoginData}.
+     * getAccountsMetadata talks to the GetAccountsMetadata endpoint of Dapi, with this {@link DapiApp}'s appSecret.
      *
      * @return an {@link GetAccountsMetadataResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
-    public GetAccountsMetadataResponse getAccountsMetadata(String accessToken, String operationID, UserInput[] userInputs) throws IOException {
-        return this.m.getAccountsMetadata(accessToken, this.loginData.getUserSecret(), operationID, userInputs);
+    public GetAccountsMetadataResponse getAccountsMetadata(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+        return this.m.getAccountsMetadata(accessToken, userSecret, operationID, userInputs);
     }
 
     /**
