@@ -32,8 +32,8 @@ public class DapiApp {
     /**
      * exchangeToken talks to the ExchangeToken endpoint of Dapi, with this {@link DapiApp}'s appSecret.
      *
-     * @param accessCode   retrieved from user login
-     * @param connectionID retrieved from user login
+     * @param accessCode   retrieved from user login.
+     * @param connectionID retrieved from user login.
      * @return an {@link ExchangeTokenResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
@@ -54,8 +54,13 @@ public class DapiApp {
     }
 
     /**
-     * getIdentity talks to the GetIdentity endpoint of Dapi, with this {@link DapiApp}'s appSecret.
+     * getIdentity talks to the GetIdentity endpoint of Dapi, with this {@link DapiApp}'s appSecret,
+     * to continue a previous operation that required to provide some userInputs.
      *
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @param operationID retrieved from the previous call's response.
+     * @param userInputs  built from the previous call's response, and the required user input.
      * @return a {@link GetIdentityResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
@@ -76,8 +81,13 @@ public class DapiApp {
     }
 
     /**
-     * getAccounts talks to the GetAccounts endpoint of Dapi, with this {@link DapiApp}'s appSecret.
+     * getAccounts talks to the GetAccounts endpoint of Dapi, with this {@link DapiApp}'s appSecret,
+     * to continue a previous operation that required to provide some userInputs.
      *
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @param operationID retrieved from the previous call's response.
+     * @param userInputs  built from the previous call's response, and the required user input.
      * @return an {@link GetAccountsResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
@@ -99,8 +109,14 @@ public class DapiApp {
     }
 
     /**
-     * getBalance talks to the GetBalance endpoint of Dapi, with this {@link DapiApp}'s appSecret.
+     * getBalance talks to the GetBalance endpoint of Dapi, with this {@link DapiApp}'s appSecret,
+     * to continue a previous operation that required to provide some userInputs.
      *
+     * @param accountID   the id of the account which this operation is about.
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @param operationID retrieved from the previous call's response.
+     * @param userInputs  built from the previous call's response, and the required user input.
      * @return an {@link GetBalanceResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
@@ -125,8 +141,16 @@ public class DapiApp {
     }
 
     /**
-     * getTransactions talks to the GetTransactions endpoint of Dapi, with this {@link DapiApp}'s appSecret.
+     * getTransactions talks to the GetTransactions endpoint of Dapi, with this {@link DapiApp}'s appSecret,
+     * to continue a previous operation that required to provide some userInputs.
      *
+     * @param accountID   the id of the account which this operation is about.
+     * @param fromDate    the start date of the transactions we want.
+     * @param toDate      the end date of the transactions we want.
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @param operationID retrieved from the previous call's response.
+     * @param userInputs  built from the previous call's response, and the required user input.
      * @return an {@link GetTransactionsResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
@@ -147,8 +171,13 @@ public class DapiApp {
     }
 
     /**
-     * createBeneficiary talks to the CreateBeneficiary endpoint of Dapi, with this {@link DapiApp}'s appSecret.
+     * createBeneficiary talks to the CreateBeneficiary endpoint of Dapi, with this {@link DapiApp}'s appSecret,
+     * to continue a previous operation that required to provide some userInputs.
      *
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @param operationID retrieved from the previous call's response.
+     * @param userInputs  built from the previous call's response, and the required user input.
      * @return an {@link CreateBeneficiaryResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
@@ -169,8 +198,13 @@ public class DapiApp {
     }
 
     /**
-     * getBeneficiaries talks to the GetBeneficiaries endpoint of Dapi, with this {@link DapiApp}'s appSecret.
+     * getBeneficiaries talks to the GetBeneficiaries endpoint of Dapi, with this {@link DapiApp}'s appSecret,
+     * to continue a previous operation that required to provide some userInputs.
      *
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @param operationID retrieved from the previous call's response.
+     * @param userInputs  built from the previous call's response, and the required user input.
      * @return an {@link GetBeneficiariesResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
@@ -192,8 +226,14 @@ public class DapiApp {
     }
 
     /**
-     * createTransfer talks to the CreateTransfer endpoint of Dapi, with this {@link DapiApp}'s appSecret.
+     * createTransfer talks to the CreateTransfer endpoint of Dapi, with this {@link DapiApp}'s appSecret,
+     * to continue a previous operation that required to provide some userInputs.
      *
+     * @param transfer    the transfer details that we want to initiate.
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @param operationID retrieved from the previous call's response.
+     * @param userInputs  built from the previous call's response, and the required user input.
      * @return an {@link CreateTransferResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
@@ -215,8 +255,14 @@ public class DapiApp {
     }
 
     /**
-     * transferAutoflow talks to the TransferAutoflow endpoint of Dapi, with this {@link DapiApp}'s appSecret.
+     * transferAutoflow talks to the TransferAutoflow endpoint of Dapi, with this {@link DapiApp}'s appSecret,
+     * to continue a previous operation that required to provide some userInputs.
      *
+     * @param transferAutoflow the details required to create a TransferAutoflow operation.
+     * @param accessToken      retrieved from the ExchangeToken process.
+     * @param userSecret       retrieved from the user login.
+     * @param operationID      retrieved from the previous call's response.
+     * @param userInputs       built from the previous call's response, and the required user input.
      * @return an {@link TransferAutoflowResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
@@ -237,8 +283,13 @@ public class DapiApp {
     }
 
     /**
-     * getAccountsMetadata talks to the GetAccountsMetadata endpoint of Dapi, with this {@link DapiApp}'s appSecret.
+     * getAccountsMetadata talks to the GetAccountsMetadata endpoint of Dapi, with this {@link DapiApp}'s appSecret,
+     * to continue a previous operation that required to provide some userInputs.
      *
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @param operationID retrieved from the previous call's response.
+     * @param userInputs  built from the previous call's response, and the required user input.
      * @return an {@link GetAccountsMetadataResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
@@ -250,8 +301,11 @@ public class DapiApp {
      * handleSDKRequest injects this {@link DapiApp}'s appSecret in the passed request body, bodyJson, and then
      * forwards the request to Dapi, with the passed headers, headersMap, and returns the RAW response got.
      *
+     * @param bodyJson   the body of the request, in JSON format.
+     * @param headersMap any headers that needs to be passed with the request.
      * @return an {@link Response} representing the HTTP response of this operation.
-     * @throws IOException in case of trouble happened while executing the request.
+     * @throws IOException         in case of trouble happened while executing the request.
+     * @throws JsonSyntaxException in case of trouble happened while reading the request body.
      */
     public Response handleSDKRequest(String bodyJson, HashMap<String, String> headersMap) throws IOException, JsonSyntaxException {
         var bodyMap = DapiRequest.jsonAgent.fromJson(bodyJson, HashMap.class);
@@ -264,8 +318,10 @@ public class DapiApp {
      * handleSDKRequest injects this {@link DapiApp}'s appSecret in the passed request body, bodyJson, and then
      * forwards the request to Dapi, and returns the RAW response got.
      *
+     * @param bodyJson the body of the request, in JSON format.
      * @return an {@link Response} representing the HTTP response of this operation.
-     * @throws IOException in case of trouble happened while executing the request.
+     * @throws IOException         in case of trouble happened while executing the request.
+     * @throws JsonSyntaxException in case of trouble happened while reading the request body.
      */
     public Response handleSDKRequest(String bodyJson) throws IOException, JsonSyntaxException {
         return this.handleSDKRequest(bodyJson, new HashMap<>());
