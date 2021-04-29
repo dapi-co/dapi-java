@@ -41,6 +41,17 @@ public class DapiApp {
         return this.a.exchangeToken(accessCode, connectionID);
     }
 
+    /**
+     * getIdentity talks to the GetIdentity endpoint of Dapi, with this {@link DapiApp}'s appSecret.
+     *
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @return a {@link GetIdentityResponse}.
+     * @throws IOException in case of trouble happened while executing the request or reading the response.
+     */
+    public GetIdentityResponse getIdentity(String accessToken, String userSecret) throws IOException {
+        return this.d.getIdentity(accessToken, userSecret, "", null);
+    }
 
     /**
      * getIdentity talks to the GetIdentity endpoint of Dapi, with this {@link DapiApp}'s appSecret.
@@ -52,6 +63,17 @@ public class DapiApp {
         return this.d.getIdentity(accessToken, userSecret, operationID, userInputs);
     }
 
+    /**
+     * getAccounts talks to the GetAccounts endpoint of Dapi, with this {@link DapiApp}'s appSecret.
+     *
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @return an {@link GetAccountsResponse}.
+     * @throws IOException in case of trouble happened while executing the request or reading the response.
+     */
+    public GetAccountsResponse getAccounts(String accessToken, String userSecret) throws IOException {
+        return this.d.getAccounts(accessToken, userSecret, "", null);
+    }
 
     /**
      * getAccounts talks to the GetAccounts endpoint of Dapi, with this {@link DapiApp}'s appSecret.
@@ -63,6 +85,18 @@ public class DapiApp {
         return this.d.getAccounts(accessToken, userSecret, operationID, userInputs);
     }
 
+    /**
+     * getBalance talks to the GetBalance endpoint of Dapi, with this {@link DapiApp}'s appSecret.
+     *
+     * @param accountID   the id of the account which this operation is about.
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @return an {@link GetBalanceResponse}.
+     * @throws IOException in case of trouble happened while executing the request or reading the response.
+     */
+    public GetBalanceResponse getBalance(String accountID, String accessToken, String userSecret) throws IOException {
+        return this.d.getBalance(accountID, accessToken, userSecret, "", null);
+    }
 
     /**
      * getBalance talks to the GetBalance endpoint of Dapi, with this {@link DapiApp}'s appSecret.
@@ -74,6 +108,21 @@ public class DapiApp {
         return this.d.getBalance(accountID, accessToken, userSecret, operationID, userInputs);
     }
 
+    /**
+     * getTransactions talks to the GetTransactions endpoint of Dapi, with this {@link DapiApp}'s appSecret,
+     * to continue a previous operation that required to provide some userInputs.
+     *
+     * @param accountID   the id of the account which this operation is about.
+     * @param fromDate    the start date of the transactions we want.
+     * @param toDate      the end date of the transactions we want.
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @return an {@link GetTransactionsResponse}.
+     * @throws IOException in case of trouble happened while executing the request or reading the response.
+     */
+    public GetTransactionsResponse getTransactions(String accountID, LocalDate fromDate, LocalDate toDate, String accessToken, String userSecret) throws IOException {
+        return this.d.getTransactions(accountID, fromDate, toDate, accessToken, userSecret, "", null);
+    }
 
     /**
      * getTransactions talks to the GetTransactions endpoint of Dapi, with this {@link DapiApp}'s appSecret.
@@ -85,6 +134,17 @@ public class DapiApp {
         return this.d.getTransactions(accountID, fromDate, toDate, accessToken, userSecret, operationID, userInputs);
     }
 
+    /**
+     * createBeneficiary talks to the CreateBeneficiary endpoint of Dapi, with this {@link DapiApp}'s appSecret.
+     *
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @return an {@link CreateBeneficiaryResponse}.
+     * @throws IOException in case of trouble happened while executing the request or reading the response.
+     */
+    public CreateBeneficiaryResponse createBeneficiary(Payment.BeneficiaryInfo beneficiary, String accessToken, String userSecret) throws IOException {
+        return this.p.createBeneficiary(beneficiary, accessToken, userSecret, "", null);
+    }
 
     /**
      * createBeneficiary talks to the CreateBeneficiary endpoint of Dapi, with this {@link DapiApp}'s appSecret.
@@ -96,6 +156,17 @@ public class DapiApp {
         return this.p.createBeneficiary(beneficiary, accessToken, userSecret, operationID, userInputs);
     }
 
+    /**
+     * getBeneficiaries talks to the GetBeneficiaries endpoint of Dapi, with this {@link DapiApp}'s appSecret.
+     *
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @return an {@link GetBeneficiariesResponse}.
+     * @throws IOException in case of trouble happened while executing the request or reading the response.
+     */
+    public GetBeneficiariesResponse getBeneficiaries(String accessToken, String userSecret) throws IOException {
+        return this.p.getBeneficiaries(accessToken, userSecret, "", null);
+    }
 
     /**
      * getBeneficiaries talks to the GetBeneficiaries endpoint of Dapi, with this {@link DapiApp}'s appSecret.
@@ -107,6 +178,18 @@ public class DapiApp {
         return this.p.getBeneficiaries(accessToken, userSecret, operationID, userInputs);
     }
 
+    /**
+     * createTransfer talks to the CreateTransfer endpoint of Dapi, with this {@link DapiApp}'s appSecret.
+     *
+     * @param transfer    the transfer details that we want to initiate.
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @return an {@link CreateTransferResponse}.
+     * @throws IOException in case of trouble happened while executing the request or reading the response.
+     */
+    public CreateTransferResponse createTransfer(Payment.Transfer transfer, String accessToken, String userSecret) throws IOException {
+        return this.p.createTransfer(transfer, accessToken, userSecret, "", null);
+    }
 
     /**
      * createTransfer talks to the CreateTransfer endpoint of Dapi, with this {@link DapiApp}'s appSecret.
@@ -118,6 +201,18 @@ public class DapiApp {
         return this.p.createTransfer(transfer, accessToken, userSecret, operationID, userInputs);
     }
 
+    /**
+     * transferAutoflow talks to the TransferAutoflow endpoint of Dapi, with this {@link DapiApp}'s appSecret.
+     *
+     * @param transferAutoflow the details required to create a TransferAutoflow operation.
+     * @param accessToken      retrieved from the ExchangeToken process.
+     * @param userSecret       retrieved from the user login.
+     * @return an {@link TransferAutoflowResponse}.
+     * @throws IOException in case of trouble happened while executing the request or reading the response.
+     */
+    public TransferAutoflowResponse transferAutoflow(Payment.TransferAutoflow transferAutoflow, String accessToken, String userSecret) throws IOException {
+        return this.p.transferAutoflow(transferAutoflow, accessToken, userSecret, "", null);
+    }
 
     /**
      * transferAutoflow talks to the TransferAutoflow endpoint of Dapi, with this {@link DapiApp}'s appSecret.
@@ -129,6 +224,17 @@ public class DapiApp {
         return this.p.transferAutoflow(transferAutoflow, accessToken, userSecret, operationID, userInputs);
     }
 
+    /**
+     * getAccountsMetadata talks to the GetAccountsMetadata endpoint of Dapi, with this {@link DapiApp}'s appSecret.
+     *
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @return an {@link GetAccountsMetadataResponse}.
+     * @throws IOException in case of trouble happened while executing the request or reading the response.
+     */
+    public GetAccountsMetadataResponse getAccountsMetadata(String accessToken, String userSecret) throws IOException {
+        return this.m.getAccountsMetadata(accessToken, userSecret, "", null);
+    }
 
     /**
      * getAccountsMetadata talks to the GetAccountsMetadata endpoint of Dapi, with this {@link DapiApp}'s appSecret.
