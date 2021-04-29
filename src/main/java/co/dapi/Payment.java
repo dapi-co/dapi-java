@@ -168,10 +168,10 @@ public class Payment {
          * Create an object that holds the info for a transfer from a bank that requires the receiver to be already
          * registered as a beneficiary to perform a transaction.
          *
-         * @param senderID   the id of the account we want to send money from.
+         * @param senderID   the id of the account which the money should be sent from.
          *                   retrieved from one of the accounts array returned from the getAccounts method.
-         * @param amount     the amount of money we want to send.
-         * @param receiverID the id of the beneficiary we want to send money to.
+         * @param amount     the amount of money which should be sent.
+         * @param receiverID the id of the beneficiary which the money should be sent to.
          *                   retrieved from one of the beneficiaries array returned from the getBeneficiaries method.
          */
         public Transfer(String senderID, float amount, String receiverID) {
@@ -188,9 +188,9 @@ public class Payment {
          * on its own, internally, and doesn't require the receiver to be already registered as a beneficiary to perform
          * a transaction.
          *
-         * @param senderID      the id of the account we want to send money from.
+         * @param senderID      the id of the account which the money should be sent from.
          *                      retrieved from one of the accounts array returned from the getAccounts method.
-         * @param amount        the amount of money we want to send.
+         * @param amount        the amount of money which should be sent.
          * @param name          the name of receiver.
          * @param iban          the IBAN of the receiver's account.
          * @param accountNumber the Account Number of the receiver's account.
@@ -238,6 +238,18 @@ public class Payment {
         private final float amount;
         private final BeneficiaryInfo beneficiary;
 
+        /**
+         * Create an object that holds the info needed for the transferAutoflow method.
+         *
+         * @param bundleID    one of the bundleIDs set for this app.
+         * @param appKey      the appKey of this app.
+         * @param userID      the userID of the user which is initiating this transfer.
+         * @param bankID      the bankID of the user which is initiating this transfer.
+         * @param senderID    the id of the account which the money should be sent from.
+         *                    retrieved from one of the accounts array returned from the getAccounts method.
+         * @param amount      the amount of money which should be sent.
+         * @param beneficiary the required info about the beneficiary.
+         */
         public TransferAutoflow(String bundleID, String appKey, String userID, String bankID, String senderID, float amount, BeneficiaryInfo beneficiary) {
             this.bundleID = bundleID;
             this.appKey = appKey;
@@ -289,6 +301,9 @@ public class Payment {
         private final String nickname;
         private final String routingNumber;
 
+        /**
+         * Creates an object that holds all the info about some beneficiary.
+         */
         public BeneficiaryInfo(String name,
                                String accountNumber,
                                String iban,
@@ -319,6 +334,9 @@ public class Payment {
             this.routingNumber = routingNumber;
         }
 
+        /**
+         * Creates an object that holds only the required info about some beneficiary.
+         */
         public BeneficiaryInfo(String name,
                                String accountNumber,
                                String iban,
