@@ -54,7 +54,7 @@ class MainTestClass {
 }
 ```
 
-3. Or, you can use it inside your endpoint. Our code will basically update the request to added your app's `appSecret`
+3. Or, you can use it inside your endpoint. Our code will basically update the request to add your app's `appSecret`
    to it, and forward the request to Dapi, then return the result.
 
 ```java
@@ -512,5 +512,4 @@ In addition to the fields described in the BaseResponse, it has the following fi
 |---|---|---|
 | reference | `String` | Transaction reference string returned by the bank. |
 
----
 ---
