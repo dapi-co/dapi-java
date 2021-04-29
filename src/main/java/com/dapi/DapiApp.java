@@ -2,6 +2,7 @@ package com.dapi;
 
 import com.dapi.response.*;
 import com.dapi.types.UserInput;
+import com.google.gson.JsonSyntaxException;
 import okhttp3.Response;
 
 import java.io.IOException;
@@ -146,7 +147,7 @@ public class DapiApp {
      * @return an {@link Response} representing the HTTP response of this operation.
      * @throws IOException in case of trouble happened while executing the request.
      */
-    public Response handleSDKRequest(String bodyJson, HashMap<String, String> headersMap) throws IOException {
+    public Response handleSDKRequest(String bodyJson, HashMap<String, String> headersMap) throws IOException, JsonSyntaxException {
         var bodyMap = DapiRequest.jsonAgent.fromJson(bodyJson, HashMap.class);
         bodyMap.put("appSecret", this.config.getAppSecret());
         bodyJson = DapiRequest.jsonAgent.toJson(bodyMap);
@@ -160,7 +161,7 @@ public class DapiApp {
      * @return an {@link Response} representing the HTTP response of this operation.
      * @throws IOException in case of trouble happened while executing the request.
      */
-    public Response handleSDKRequest(String bodyJson) throws IOException {
+    public Response handleSDKRequest(String bodyJson) throws IOException, JsonSyntaxException {
         return this.handleSDKRequest(bodyJson, new HashMap<>());
     }
 }
