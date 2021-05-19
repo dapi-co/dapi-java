@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
-group 'com.dapi'
+group 'co.dapi'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 11
