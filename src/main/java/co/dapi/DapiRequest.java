@@ -26,6 +26,7 @@ public class DapiRequest {
 
 
     public static Response HandleSDK(String bodyJson, HashMap<String, String> headersMap) throws IOException {
+        headersMap.put("Host", "dd.dapi.co");
         return doRequest(bodyJson, DD_URL, headersMap);
     }
 
