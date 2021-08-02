@@ -12,7 +12,7 @@ A client library that talks to the [Dapi](https://dapi.co) [API](https://api.dap
 <dependency>
    <groupId>co.dapi</groupId>
    <artifactId>dapi-java</artifactId>
-   <version>1.0.0</version>
+   <version>1.0.1</version>
 </dependency>
 ```
 
