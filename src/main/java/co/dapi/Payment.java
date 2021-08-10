@@ -163,6 +163,8 @@ public class Payment {
         private final String name;
         private final String iban;
         private final String accountNumber;
+        private final String remark;
+        private final String nickname;
 
         /**
          * Create an object that holds the info for a transfer from a bank that requires the receiver to be already
@@ -181,6 +183,30 @@ public class Payment {
             this.name = null;
             this.iban = null;
             this.accountNumber = null;
+            this.remark = null;
+            this.nickname = null;
+        }
+
+        /**
+         * Create an object that holds the info for a transfer from a bank that requires the receiver to be already
+         * registered as a beneficiary to perform a transaction.
+         *
+         * @param senderID   the id of the account which the money should be sent from.
+         *                   retrieved from one of the accounts array returned from the getAccounts method.
+         * @param amount     the amount of money which should be sent.
+         * @param receiverID the id of the beneficiary which the money should be sent to.
+         *                   retrieved from one of the beneficiaries array returned from the getBeneficiaries method.
+         * @param remark     the remark string that will be sent with this transfer.
+         */
+        public Transfer(String senderID, float amount, String receiverID, String remark) {
+            this.senderID = senderID;
+            this.amount = amount;
+            this.receiverID = receiverID;
+            this.remark = remark;
+            this.name = null;
+            this.iban = null;
+            this.accountNumber = null;
+            this.nickname = null;
         }
 
         /**
@@ -198,10 +224,37 @@ public class Payment {
         public Transfer(String senderID, float amount, String name, String iban, String accountNumber) {
             this.senderID = senderID;
             this.amount = amount;
-            this.receiverID = null;
             this.name = name;
             this.iban = iban;
             this.accountNumber = accountNumber;
+            this.receiverID = null;
+            this.remark = null;
+            this.nickname = null;
+        }
+
+        /**
+         * Create an object that holds the info for a transfer from a bank that handles the creation of beneficiaries
+         * on its own, internally, and doesn't require the receiver to be already registered as a beneficiary to perform
+         * a transaction.
+         *
+         * @param senderID      the id of the account which the money should be sent from.
+         *                      retrieved from one of the accounts array returned from the getAccounts method.
+         * @param amount        the amount of money which should be sent.
+         * @param name          the name of receiver.
+         * @param iban          the IBAN of the receiver's account.
+         * @param accountNumber the Account Number of the receiver's account.
+         * @param remark        the remark string that will be sent with this transfer.
+         * @param nickname      the nickname of the receiver.
+         */
+        public Transfer(String senderID, float amount, String name, String iban, String accountNumber, String remark, String nickname) {
+            this.senderID = senderID;
+            this.amount = amount;
+            this.name = name;
+            this.iban = iban;
+            this.accountNumber = accountNumber;
+            this.remark = remark;
+            this.nickname = nickname;
+            this.receiverID = null;
         }
 
         public String getSenderID() {
@@ -227,6 +280,14 @@ public class Payment {
         public Optional<String> getAccountNumber() {
             return Optional.ofNullable(accountNumber);
         }
+
+        public Optional<String> getRemark() {
+            return Optional.ofNullable(remark);
+        }
+
+        public Optional<String> getNickname() {
+            return Optional.ofNullable(nickname);
+        }
     }
 
     public static class TransferAutoflow {
@@ -236,6 +297,7 @@ public class Payment {
         private final String bankID;
         private final String senderID;
         private final float amount;
+        private final String remark;
         private final BeneficiaryInfo beneficiary;
 
         /**
@@ -258,6 +320,31 @@ public class Payment {
             this.senderID = senderID;
             this.amount = amount;
             this.beneficiary = beneficiary;
+            this.remark = null;
+        }
+
+        /**
+         * Create an object that holds the info needed for the transferAutoflow method.
+         *
+         * @param bundleID    one of the bundleIDs set for this app.
+         * @param appKey      the appKey of this app.
+         * @param userID      the userID of the user which is initiating this transfer.
+         * @param bankID      the bankID of the user which is initiating this transfer.
+         * @param senderID    the id of the account which the money should be sent from.
+         *                    retrieved from one of the accounts array returned from the getAccounts method.
+         * @param amount      the amount of money which should be sent.
+         * @param beneficiary the required info about the beneficiary.
+         * @param remark      the remark string that will be sent with this transfer.
+         */
+        public TransferAutoflow(String bundleID, String appKey, String userID, String bankID, String senderID, float amount, BeneficiaryInfo beneficiary, String remark) {
+            this.bundleID = bundleID;
+            this.appKey = appKey;
+            this.userID = userID;
+            this.bankID = bankID;
+            this.senderID = senderID;
+            this.amount = amount;
+            this.beneficiary = beneficiary;
+            this.remark = remark;
         }
 
         public String getBundleID() {
@@ -282,6 +369,10 @@ public class Payment {
 
         public BeneficiaryInfo getBeneficiary() {
             return beneficiary;
+        }
+
+        public Optional<String> getRemark() {
+            return Optional.ofNullable(remark);
         }
     }
 
@@ -478,6 +569,8 @@ public class Payment {
         private final String name;
         private final String iban;
         private final String accountNumber;
+        private final String remark;
+        private final String nickname;
 
         public CreateTransferRequest(Transfer transfer,
                                      String appSecret,
@@ -491,6 +584,8 @@ public class Payment {
             this.name = transfer.name;
             this.iban = transfer.iban;
             this.accountNumber = transfer.accountNumber;
+            this.remark = transfer.remark;
+            this.nickname = transfer.nickname;
         }
     }
 
@@ -503,6 +598,7 @@ public class Payment {
         private final String senderID;
         private final float amount;
         private final BeneficiaryInfo beneficiary;
+        private final String remark;
 
         public TransferAutoflowRequest(TransferAutoflow transferAutoflow,
                                        String appSecret,
@@ -517,6 +613,7 @@ public class Payment {
             this.senderID = transferAutoflow.senderID;
             this.amount = transferAutoflow.amount;
             this.beneficiary = transferAutoflow.beneficiary;
+            this.remark = transferAutoflow.remark;
         }
     }
 }
