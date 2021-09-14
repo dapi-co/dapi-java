@@ -18,17 +18,17 @@ public class Metadata {
     public GetAccountsMetadataResponse getAccountsMetadata(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var body = new GetAccountsMetadataRequest(this.config.getAppSecret(), userSecret, operationID, userInputs);
+        GetAccountsMetadataRequest body = new GetAccountsMetadataRequest(this.config.getAppSecret(), userSecret, operationID, userInputs);
 
         // Convert the body map to a JSON string
-        var bodyJson = DapiRequest.jsonAgent.toJson(body, GetAccountsMetadataRequest.class);
+        String bodyJson = DapiRequest.jsonAgent.toJson(body, GetAccountsMetadataRequest.class);
 
         // Construct the headers needed for this request
-        var headers = new HashMap<String, String>();
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + accessToken);
 
         // Make the request and get the response
-        var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
+        String respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
 
 
         // Convert the got response to the wanted response type
@@ -40,7 +40,7 @@ public class Metadata {
         }
 
         // Check if the got response was of unexpected format, and return a suitable response
-        if (resp == null || (resp.getStatus() == null && resp.getType().isEmpty())) {
+        if (resp == null || (resp.getStatus() == null && !resp.getType().isPresent())) {
             // If the got response wasn't a JSON string, resp will be null, and if
             // it didn't have the 'status' field, getStatus() will return null.
             return new GetAccountsMetadataResponse("UNEXPECTED_RESPONSE", "Unexpected response body");

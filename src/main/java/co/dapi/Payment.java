@@ -23,18 +23,18 @@ public class Payment {
     public CreateBeneficiaryResponse createBeneficiary(BeneficiaryInfo beneficiary, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var bodyObj = new CreateBenefRequest(beneficiary, this.config.getAppSecret(), userSecret,
+        CreateBenefRequest bodyObj = new CreateBenefRequest(beneficiary, this.config.getAppSecret(), userSecret,
                 operationID, userInputs);
 
         // Convert the request body to a JSON string
-        var bodyJson = DapiRequest.jsonAgent.toJson(bodyObj, CreateBenefRequest.class);
+        String bodyJson = DapiRequest.jsonAgent.toJson(bodyObj, CreateBenefRequest.class);
 
         // Construct the headers needed for this request
-        var headers = new HashMap<String, String>();
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + accessToken);
 
         // Make the request and get the response
-        var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + bodyObj.action, headers);
+        String respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + bodyObj.action, headers);
 
 
         // Convert the got response to the wanted response type
@@ -46,7 +46,7 @@ public class Payment {
         }
 
         // Check if the got response was of unexpected format, and return a suitable response
-        if (resp == null || (resp.getStatus() == null && resp.getType().isEmpty())) {
+        if (resp == null || (resp.getStatus() == null && !resp.getType().isPresent())) {
             // If the got response wasn't a JSON string, resp will be null, and if
             // it didn't have the 'status' field, getStatus() will return null.
             return new CreateBeneficiaryResponse("UNEXPECTED_RESPONSE", "Unexpected response body");
@@ -58,17 +58,17 @@ public class Payment {
     public GetBeneficiariesResponse getBeneficiaries(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var bodyObj = new GetBenefsRequest(this.config.getAppSecret(), userSecret, operationID, userInputs);
+        GetBenefsRequest bodyObj = new GetBenefsRequest(this.config.getAppSecret(), userSecret, operationID, userInputs);
 
         // Convert the request body to a JSON string
-        var bodyJson = DapiRequest.jsonAgent.toJson(bodyObj, GetBenefsRequest.class);
+        String bodyJson = DapiRequest.jsonAgent.toJson(bodyObj, GetBenefsRequest.class);
 
         // Construct the headers needed for this request
-        var headers = new HashMap<String, String>();
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + accessToken);
 
         // Make the request and get the response
-        var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + bodyObj.action, headers);
+        String respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + bodyObj.action, headers);
 
         // Convert the got response to the wanted response type
         GetBeneficiariesResponse resp = null;
@@ -79,7 +79,7 @@ public class Payment {
         }
 
         // Check if the got response was of unexpected format, and return a suitable response
-        if (resp == null || (resp.getStatus() == null && resp.getType().isEmpty())) {
+        if (resp == null || (resp.getStatus() == null && !resp.getType().isPresent())) {
             // If the got response wasn't a JSON string, resp will be null, and if
             // it didn't have the 'status' field, getStatus() will return null.
             return new GetBeneficiariesResponse("UNEXPECTED_RESPONSE", "Unexpected response body");
@@ -91,18 +91,18 @@ public class Payment {
     public CreateTransferResponse createTransfer(Transfer transfer, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var body = new CreateTransferRequest(transfer, this.config.getAppSecret(), userSecret,
+        CreateTransferRequest body = new CreateTransferRequest(transfer, this.config.getAppSecret(), userSecret,
                 operationID, userInputs);
 
         // Convert the request body to a JSON string
-        var bodyJson = DapiRequest.jsonAgent.toJson(body, CreateTransferRequest.class);
+        String bodyJson = DapiRequest.jsonAgent.toJson(body, CreateTransferRequest.class);
 
         // Construct the headers needed for this request
-        var headers = new HashMap<String, String>();
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + accessToken);
 
         // Make the request and get the response
-        var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
+        String respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
 
         // Convert the got response to the wanted response type
         CreateTransferResponse resp = null;
@@ -113,7 +113,7 @@ public class Payment {
         }
 
         // Check if the got response was of unexpected format, and return a suitable response
-        if (resp == null || (resp.getStatus() == null && resp.getType().isEmpty())) {
+        if (resp == null || (resp.getStatus() == null && !resp.getType().isPresent())) {
             // If the got response wasn't a JSON string, resp will be null, and if
             // it didn't have the 'status' field, getStatus() will return null.
             return new CreateTransferResponse("UNEXPECTED_RESPONSE", "Unexpected response body");
@@ -125,18 +125,18 @@ public class Payment {
     public TransferAutoflowResponse transferAutoflow(TransferAutoflow transferAutoflow, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var body = new TransferAutoflowRequest(transferAutoflow, this.config.getAppSecret(), userSecret,
+        TransferAutoflowRequest body = new TransferAutoflowRequest(transferAutoflow, this.config.getAppSecret(), userSecret,
                 operationID, userInputs);
 
         // Convert the request body to a JSON string
-        var bodyJson = DapiRequest.jsonAgent.toJson(body, TransferAutoflowRequest.class);
+        String bodyJson = DapiRequest.jsonAgent.toJson(body, TransferAutoflowRequest.class);
 
         // Construct the headers needed for this request
-        var headers = new HashMap<String, String>();
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + accessToken);
 
         // Make the request and get the response
-        var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
+        String respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
 
         // Convert the got response to the wanted response type
         TransferAutoflowResponse resp = null;
@@ -147,7 +147,7 @@ public class Payment {
         }
 
         // Check if the got response was of unexpected format, and return a suitable response
-        if (resp == null || (resp.getStatus() == null && resp.getType().isEmpty())) {
+        if (resp == null || (resp.getStatus() == null && !resp.getType().isPresent())) {
             // If the got response wasn't a JSON string, resp will be null, and if
             // it didn't have the 'status' field, getStatus() will return null.
             return new TransferAutoflowResponse("UNEXPECTED_RESPONSE", "Unexpected response body");

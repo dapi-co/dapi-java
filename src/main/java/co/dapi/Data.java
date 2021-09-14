@@ -23,17 +23,17 @@ public class Data {
     GetIdentityResponse getIdentity(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var body = new GetIdentityRequest(this.config.getAppSecret(), userSecret, operationID, userInputs);
+        GetIdentityRequest body = new GetIdentityRequest(this.config.getAppSecret(), userSecret, operationID, userInputs);
 
         // Convert the request body to a JSON string
-        var bodyJson = DapiRequest.jsonAgent.toJson(body, GetIdentityRequest.class);
+        String bodyJson = DapiRequest.jsonAgent.toJson(body, GetIdentityRequest.class);
 
         // Construct the headers needed for this request
-        var headers = new HashMap<String, String>();
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + accessToken);
 
         // Make the request and get the response
-        var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
+        String respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
 
         // Convert the got response to the wanted response type
         GetIdentityResponse resp = null;
@@ -44,7 +44,7 @@ public class Data {
         }
 
         // Check if the got response was of unexpected format, and return a suitable response
-        if (resp == null || (resp.getStatus() == null && resp.getType().isEmpty())) {
+        if (resp == null || (resp.getStatus() == null && !resp.getType().isPresent())) {
             // If the got response wasn't a JSON string, resp will be null, and if
             // it didn't have the 'status' field, getStatus() will return null.
             return new GetIdentityResponse("UNEXPECTED_RESPONSE", "Unexpected response body");
@@ -56,17 +56,17 @@ public class Data {
     GetAccountsResponse getAccounts(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var body = new GetAccountsRequest(this.config.getAppSecret(), userSecret, operationID, userInputs);
+        GetAccountsRequest body = new GetAccountsRequest(this.config.getAppSecret(), userSecret, operationID, userInputs);
 
         // Convert the request body to a JSON string
-        var bodyJson = DapiRequest.jsonAgent.toJson(body, GetAccountsRequest.class);
+        String bodyJson = DapiRequest.jsonAgent.toJson(body, GetAccountsRequest.class);
 
         // Construct the headers needed for this request
-        var headers = new HashMap<String, String>();
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + accessToken);
 
         // Make the request and get the response
-        var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
+        String respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
 
         // Convert the got response to the wanted response type
         GetAccountsResponse resp = null;
@@ -77,7 +77,7 @@ public class Data {
         }
 
         // Check if the got response was of unexpected format, and return a suitable response
-        if (resp == null || (resp.getStatus() == null && resp.getType().isEmpty())) {
+        if (resp == null || (resp.getStatus() == null && !resp.getType().isPresent())) {
             // If the got response wasn't a JSON string, resp will be null, and if
             // it didn't have the 'status' field, getStatus() will return null.
             return new GetAccountsResponse("UNEXPECTED_RESPONSE", "Unexpected response body");
@@ -89,18 +89,18 @@ public class Data {
     GetBalanceResponse getBalance(String accountID, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var body = new GetBalanceRequest(accountID, this.config.getAppSecret(), userSecret,
+        GetBalanceRequest body = new GetBalanceRequest(accountID, this.config.getAppSecret(), userSecret,
                 operationID, userInputs);
 
         // Convert the request body to a JSON string
-        var bodyJson = DapiRequest.jsonAgent.toJson(body, GetBalanceRequest.class);
+        String bodyJson = DapiRequest.jsonAgent.toJson(body, GetBalanceRequest.class);
 
         // Construct the headers needed for this request
-        var headers = new HashMap<String, String>();
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + accessToken);
 
         // Make the request and get the response
-        var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
+        String respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
 
         // Convert the got response to the wanted response type
         GetBalanceResponse resp = null;
@@ -111,7 +111,7 @@ public class Data {
         }
 
         // Check if the got response was of unexpected format, and return a suitable response
-        if (resp == null || (resp.getStatus() == null && resp.getType().isEmpty())) {
+        if (resp == null || (resp.getStatus() == null && !resp.getType().isPresent())) {
             // If the got response wasn't a JSON string, resp will be null, and if
             // it didn't have the 'status' field, getStatus() will return null.
             return new GetBalanceResponse("UNEXPECTED_RESPONSE", "Unexpected response body");
@@ -123,18 +123,18 @@ public class Data {
     GetTransactionsResponse getTransactions(String accountID, LocalDate fromDate, LocalDate toDate, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
-        var body = new GetTransactionsRequest(accountID, fromDate, toDate, this.config.getAppSecret(),
+        GetTransactionsRequest body = new GetTransactionsRequest(accountID, fromDate, toDate, this.config.getAppSecret(),
                 userSecret, operationID, userInputs);
 
         // Convert the request body to a JSON string
-        var bodyJson = DapiRequest.jsonAgent.toJson(body, GetTransactionsRequest.class);
+        String bodyJson = DapiRequest.jsonAgent.toJson(body, GetTransactionsRequest.class);
 
         // Construct the headers needed for this request
-        var headers = new HashMap<String, String>();
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + accessToken);
 
         // Make the request and get the response
-        var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
+        String respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action, headers);
 
         // Convert the got response to the wanted response type
         GetTransactionsResponse resp = null;
@@ -145,7 +145,7 @@ public class Data {
         }
 
         // Check if the got response was of unexpected format, and return a suitable response
-        if (resp == null || (resp.getStatus() == null && resp.getType().isEmpty())) {
+        if (resp == null || (resp.getStatus() == null && !resp.getType().isPresent())) {
             // If the got response wasn't a JSON string, resp will be null, and if
             // it didn't have the 'status' field, getStatus() will return null.
             return new GetTransactionsResponse("UNEXPECTED_RESPONSE", "Unexpected response body");

@@ -36,10 +36,10 @@ public class DapiRequest {
 
     public static String Do(String bodyJson, String url, HashMap<String, String> headersMap) throws IOException {
         // Execute the request and get the response
-        var resp = doRequest(bodyJson, url, headersMap);
+        Response resp = doRequest(bodyJson, url, headersMap);
 
         // Return the response body if it's there, otherwise return an empty string
-        var respBody = resp.body();
+        ResponseBody respBody = resp.body();
         if (respBody == null)
             return "";
         return respBody.string();
@@ -47,19 +47,19 @@ public class DapiRequest {
 
     private static Response doRequest(String bodyJson, String url, HashMap<String, String> headersMap) throws IOException {
         // Build the headers from the default values, plus the passed ones
-        var headers = new Headers.Builder().
+        Headers.Builder headersBuilder = new Headers.Builder().
                 add("Content-Type", "application/json");
 
         for (Map.Entry<String, String> header : headersMap.entrySet()) {
-            headers.add(header.getKey(), header.getValue());
+            headersBuilder.add(header.getKey(), header.getValue());
         }
 
         // Create the request
-        var reqBody = RequestBody.create(bodyJson, MediaType.parse("application/json"));
-        var req = new Request.Builder()
+        RequestBody reqBody = RequestBody.create(bodyJson, MediaType.parse("application/json"));
+        Request req = new Request.Builder()
                 .url(url)
                 .method("POST", reqBody)
-                .headers(headers.build())
+                .headers(headersBuilder.build())
                 .build();
 
         // Execute the request and return the response
@@ -85,12 +85,12 @@ public class DapiRequest {
 
         @Override
         public JsonElement serialize(HashMap<String, Object> src, Type typeOfSrc, JsonSerializationContext context) {
-            var output = new JsonObject();
+            JsonObject output = new JsonObject();
 
             // loop over each field in the request
-            for (var kv : src.entrySet()) {
-                var fieldName = kv.getKey();
-                var fieldValue = kv.getValue();
+            for (Map.Entry<String, Object> kv : src.entrySet()) {
+                String fieldName = kv.getKey();
+                Object fieldValue = kv.getValue();
 
                 // if the current field is not the userInputs, or the type of userInputs is not
                 // as expected, serialize it using the default serializer.
@@ -99,27 +99,27 @@ public class DapiRequest {
                     continue;
                 }
 
-                var userInputsOutput = new JsonArray();
+                JsonArray userInputsOutput = new JsonArray();
 
                 // loop over each element in the userInputs array
-                for (var ui : (List<?>) fieldValue) {
+                for (Object ui : (List<?>) fieldValue) {
                     if (!(ui instanceof Map)) {
                         userInputsOutput.add(context.serialize(ui));
                         continue;
                     }
 
-                    var outputUiObj = new JsonObject();
+                    JsonObject outputUiObj = new JsonObject();
 
                     // loop over each field of the current userInput object
-                    for (var uiEntry : ((Map<?, ?>) ui).entrySet()) {
-                        var uiFieldName = (String) uiEntry.getKey();
-                        var uiFieldValue = uiEntry.getValue();
+                    for (Map.Entry<?, ?> uiEntry : ((Map<?, ?>) ui).entrySet()) {
+                        String uiFieldName = (String) uiEntry.getKey();
+                        Object uiFieldValue = uiEntry.getValue();
 
                         // handle only the index field, so use the default serializer otherwise
                         if (!uiFieldName.equals("index")) {
                             outputUiObj.add(uiFieldName, context.serialize(uiFieldValue));
                         } else {
-                            var index = ((int) ((double) uiFieldValue));
+                            int index = ((int) ((double) uiFieldValue));
                             outputUiObj.add(uiFieldName, new JsonPrimitive(index));
                         }
                     }
