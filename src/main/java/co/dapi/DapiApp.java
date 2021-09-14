@@ -308,7 +308,7 @@ public class DapiApp {
      * @throws JsonSyntaxException in case of trouble happened while reading the request body.
      */
     public Response handleSDKRequest(String bodyJson, HashMap<String, String> headersMap) throws IOException, JsonSyntaxException {
-        var bodyMap = DapiRequest.jsonAgent.fromJson(bodyJson, HashMap.class);
+        HashMap bodyMap = DapiRequest.jsonAgent.fromJson(bodyJson, HashMap.class);
         bodyMap.put("appSecret", this.config.getAppSecret());
         bodyJson = DapiRequest.jsonAgent.toJson(bodyMap);
         return DapiRequest.HandleSDK(bodyJson, headersMap);

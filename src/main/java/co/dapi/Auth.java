@@ -16,13 +16,13 @@ public class Auth {
     public ExchangeTokenResponse exchangeToken(String accessCode, String connectionID) throws IOException {
 
         // Create the request body of this call
-        var body = new ExchangeTokenRequest(this.config.getAppSecret(), accessCode, connectionID);
+        ExchangeTokenRequest body = new ExchangeTokenRequest(this.config.getAppSecret(), accessCode, connectionID);
 
         // Convert the request body to a JSON string
-        var bodyJson = DapiRequest.jsonAgent.toJson(body, ExchangeTokenRequest.class);
+        String bodyJson = DapiRequest.jsonAgent.toJson(body, ExchangeTokenRequest.class);
 
         // Make the request and get the response
-        var respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action);
+        String respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + body.action);
 
         // Convert the got response to the wanted response type
         ExchangeTokenResponse resp = null;
@@ -33,7 +33,7 @@ public class Auth {
         }
 
         // Check if the got response was of unexpected format, and return a suitable response
-        if (resp == null || (resp.getStatus() == null && resp.getType().isEmpty())) {
+        if (resp == null || (resp.getStatus() == null && !resp.getType().isPresent())) {
             // If the got response wasn't a JSON string, resp will be null, and if
             // it didn't have the 'status' field, getStatus() will return null.
             return new ExchangeTokenResponse("UNEXPECTED_RESPONSE", "Unexpected response body");
