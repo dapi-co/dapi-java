@@ -26,7 +26,7 @@ public class DapiRequest {
 
 
     public static Response HandleSDK(String bodyJson, HashMap<String, String> headersMap) throws IOException {
-        headersMap.put("Host", "dd.dapi.co");
+        headersMap.put("host", "dd.dapi.co");
         return doRequest(bodyJson, DD_URL, headersMap);
     }
 
@@ -47,12 +47,11 @@ public class DapiRequest {
 
     private static Response doRequest(String bodyJson, String url, HashMap<String, String> headersMap) throws IOException {
         // Build the headers from the default values, plus the passed ones
-        Headers.Builder headersBuilder = new Headers.Builder().
-                add("Content-Type", "application/json");
-
+        Headers.Builder headersBuilder = new Headers.Builder();
         for (Map.Entry<String, String> header : headersMap.entrySet()) {
-            headersBuilder.add(header.getKey(), header.getValue());
+            headersBuilder.set(header.getKey(), header.getValue());
         }
+        headersBuilder.set("content-type", "application/json");
 
         // Create the request
         RequestBody reqBody = RequestBody.create(bodyJson, MediaType.parse("application/json"));
