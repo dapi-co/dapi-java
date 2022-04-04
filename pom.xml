@@ -26,9 +26,9 @@
         <developer>
             <id>Dapi</id>
             <name>Dapi</name>
-            <email>hello@dapi.co</email>
+            <email>hello@dapi.com</email>
             <organization>Dapi</organization>
-            <organizationUrl>https://dapi.co</organizationUrl>
+            <organizationUrl>https://dapi.com</organizationUrl>
             <roles>
                 <role>developer</role>
             </roles>
@@ -37,7 +37,7 @@
 
     <organization>
         <name>Dapi</name>
-        <url>https://dapi.co</url>
+        <url>https://dapi.com</url>
     </organization>
 
 

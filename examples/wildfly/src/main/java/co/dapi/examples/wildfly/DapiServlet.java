@@ -36,7 +36,7 @@ public class DapiServlet extends HttpServlet {
             String headerValue = req.getHeader(headerName);
             reqHeaders.put(headerName, headerValue);
         }
-        reqHeaders.put("Host", "dd.dapi.co");
+        reqHeaders.put("Host", "dd.dapi.com");
 
         // Call Dapi with the got request body and headers, and handle any exception that may occur
         try {
