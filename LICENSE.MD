@@ -8,8 +8,8 @@
 <developers>
     <developer>
         <name>Kamil Kamili</name>
-        <email>kamil@dapi.co</email>
+        <email>kamil@dapi.com</email>
         <organization>Dapi</organization>
-        <organizationUrl>https://www.dapi.co</organizationUrl>
+        <organizationUrl>https://www.dapi.com</organizationUrl>
     </developer>
 </developers>
