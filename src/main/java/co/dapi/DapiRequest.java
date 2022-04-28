@@ -41,7 +41,7 @@ public class DapiRequest {
         // Return the response body if it's there, otherwise return an empty string
         ResponseBody respBody = resp.body();
         if (respBody == null)
-            return "";
+            return "{}";
         return respBody.string();
     }
 
