@@ -7,8 +7,8 @@
 
 <developers>
     <developer>
-        <name>Kamil Kamili</name>
-        <email>kamil@dapi.com</email>
+        <name>Dapi</name>
+        <email>dev@dapi.com</email>
         <organization>Dapi</organization>
         <organizationUrl>https://www.dapi.com</organizationUrl>
     </developer>
