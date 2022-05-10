@@ -32,7 +32,7 @@ public class DapiRequest {
     }
 
     public static Response HandleSecureSDK(String bodyJson, HashMap<String, String> headersMap) throws IOException {
-        headersMap.put("host", "secure.dapi.com");
+        headersMap.put("host", "api.secure.dapi.com");
         return doRequest(bodyJson, SECURE_URL, headersMap);
     }
 
