@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class DapiRequest {
     public final static String Dapi_URL = "https://api.dapi.com";
     public final static String DD_URL = "https://dd.dapi.com";
-    public final static String SECURE_URL = "https://api.secure.dapi.com";
+    public final static String SECURE_DD_URL = "https://dd.secure.dapi.com";
 
     final static Gson jsonAgent = new Gson().newBuilder()
             .disableHtmlEscaping()
@@ -32,8 +32,8 @@ public class DapiRequest {
     }
 
     public static Response HandleSecureSDK(String bodyJson, HashMap<String, String> headersMap) throws IOException {
-        headersMap.put("host", "api.secure.dapi.com");
-        return doRequest(bodyJson, SECURE_URL, headersMap);
+        headersMap.put("host", "dd.secure.dapi.com");
+        return doRequest(bodyJson, SECURE_DD_URL, headersMap);
     }
 
     public static String Do(String bodyJson, String url) throws IOException {
