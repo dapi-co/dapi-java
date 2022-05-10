@@ -298,11 +298,11 @@ public class DapiApp {
     }
 
     /**
-     * handleSDKRequest injects this {@link DapiApp}'s appSecret in the passed request body, bodyJson, and then
+     * handleSDKRequest injects this {@link DapiApp}'s appSecret in the provided request body, bodyJson, and then
      * forwards the request to Dapi, with the passed headers, headersMap, and returns the RAW response got.
      *
      * @param bodyJson   the body of the request, in JSON format.
-     * @param headersMap any headers that needs to be passed with the request.
+     * @param headersMap any headers that need to be passed with the request.
      * @return an {@link Response} representing the HTTP response of this operation.
      * @throws IOException         in case of trouble happened while executing the request.
      * @throws JsonSyntaxException in case of trouble happened while reading the request body.
@@ -319,7 +319,7 @@ public class DapiApp {
     }
 
     /**
-     * handleSDKRequest injects this {@link DapiApp}'s appSecret in the passed request body, bodyJson, and then
+     * handleSDKRequest injects this {@link DapiApp}'s appSecret in the provided request body, bodyJson, and then
      * forwards the request to Dapi, and returns the RAW response got.
      *
      * @param bodyJson the body of the request, in JSON format.
@@ -329,5 +329,41 @@ public class DapiApp {
      */
     public Response handleSDKRequest(String bodyJson) throws IOException, JsonSyntaxException {
         return this.handleSDKRequest(bodyJson, new HashMap<>());
+    }
+
+    /**
+     * handleSecureSDKRequest injects this {@link DapiApp}'s appSecret in the provided request body, bodyJson, and then
+     * forwards the request to Dapi, with the provided headers, headersMap, and returns the RAW response got.
+     * For more info about this function, please contact support@dapi.com
+     *
+     * @param bodyJson   the body of the request, in JSON format.
+     * @param headersMap any headers that need to be passed with the request.
+     * @return an {@link Response} representing the HTTP response of this operation.
+     * @throws IOException         in case of trouble happened while executing the request.
+     * @throws JsonSyntaxException in case of trouble happened while reading the request body.
+     */
+    public Response handleSecureSDKRequest(String bodyJson, HashMap<String, String> headersMap) throws IOException, JsonSyntaxException {
+        HashMap bodyMap = DapiRequest.jsonAgent.fromJson(bodyJson, HashMap.class);
+
+        // handling passing empty body string
+        if (bodyMap == null) bodyMap = new HashMap();
+
+        bodyMap.put("appSecret", this.config.getAppSecret());
+        bodyJson = DapiRequest.jsonAgent.toJson(bodyMap);
+        return DapiRequest.HandleSecureSDK(bodyJson, headersMap);
+    }
+
+    /**
+     * handleSecureSDKRequest injects this {@link DapiApp}'s appSecret in the provided request body, bodyJson, and then
+     * forwards the request to Dapi, and returns the RAW response got
+     * For more info about this function, please contact support@dapi.com
+     *
+     * @param bodyJson the body of the request, in JSON format.
+     * @return an {@link Response} representing the HTTP response of this operation.
+     * @throws IOException         in case of trouble happened while executing the request.
+     * @throws JsonSyntaxException in case of trouble happened while reading the request body.
+     */
+    public Response handleSecureSDKRequest(String bodyJson) throws IOException, JsonSyntaxException {
+        return this.handleSecureSDKRequest(bodyJson, new HashMap<>());
     }
 }
