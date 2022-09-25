@@ -3,6 +3,7 @@ package co.dapi;
 import co.dapi.types.UserInput;
 import com.google.gson.*;
 import okhttp3.*;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -21,10 +22,19 @@ public class DapiRequest {
             .registerTypeAdapter(HashMap.class, new SDKRequestSerializer())
             .create();
 
-    private final static OkHttpClient httpClient = new OkHttpClient().newBuilder()
-            .readTimeout(2, TimeUnit.MINUTES)
-            .build();
+    private static OkHttpClient httpClient = null;
 
+    private static OkHttpClient getHttpClient(){
+        if(httpClient == null){
+            HttpLoggingInterceptor logger = new HttpLoggingInterceptor();
+            logger.setLevel(HttpLoggingInterceptor.Level.BODY);
+            httpClient = new OkHttpClient().newBuilder()
+                            .addInterceptor(logger)
+                            .readTimeout(2, TimeUnit.MINUTES)
+                            .build();
+        }
+        return httpClient;
+    }
 
     public static Response HandleSDK(String bodyJson, HashMap<String, String> headersMap) throws IOException {
         headersMap.put("host", "dd.dapi.com");
@@ -68,7 +78,7 @@ public class DapiRequest {
                 .build();
 
         // Execute the request and return the response
-        return httpClient.newCall(req).execute();
+        return getHttpClient().newCall(req).execute();
     }
 
     static class BaseRequest {
