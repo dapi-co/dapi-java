@@ -13,5 +13,7 @@ public class GetAccountsMetadataResponse extends BaseResponse {
         super(errType, errMsg);
     }
 
-
+    public Optional<AccountsMetadata> getAccountsMetadata() {
+        return Optional.ofNullable(accountsMetadata);
+    }
 }
