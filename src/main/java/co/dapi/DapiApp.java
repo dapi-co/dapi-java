@@ -4,10 +4,10 @@ import co.dapi.response.*;
 import co.dapi.types.UserInput;
 import com.google.gson.JsonSyntaxException;
 import okhttp3.Response;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
+
 
 
 /**
@@ -19,6 +19,7 @@ public class DapiApp {
     private final Auth a;
     private final Data d;
     private final Payment p;
+    private final ACH ach;
     private final Metadata m;
 
     public DapiApp(Config config) {
@@ -27,6 +28,7 @@ public class DapiApp {
         this.d = new Data(config);
         this.p = new Payment(config);
         this.m = new Metadata(config);
+        this.ach = new ACH(config);
     }
 
     /**
@@ -296,6 +298,24 @@ public class DapiApp {
     public GetAccountsMetadataResponse getAccountsMetadata(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
         return this.m.getAccountsMetadata(accessToken, userSecret, operationID, userInputs);
     }
+
+
+    /**
+     * createPull talks to the CreatePull endpoint of Dapi, with this {@link DapiApp}'s appSecret,
+     * to continue a previous operation that required to provide some userInputs.
+     *
+     * @param transfer    the transfer details that we want to initiate.
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @param operationID retrieved from the previous call's response.
+     * @param userInputs  built from the previous call's response, and the required user input.
+     * @return an {@link CreateTransferResponse}.
+     * @throws IOException in case of trouble happened while executing the request or reading the response.
+     */
+    public CreatePullResponse createPull(ACH.CreatePull transfer, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+        return this.ach.createPull(transfer, accessToken, userSecret, operationID, userInputs);
+    }
+
 
     /**
      * handleSDKRequest injects this {@link DapiApp}'s appSecret in the provided request body, bodyJson, and then
