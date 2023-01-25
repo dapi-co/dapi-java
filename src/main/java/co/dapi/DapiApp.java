@@ -309,11 +309,27 @@ public class DapiApp {
      * @param userSecret  retrieved from the user login.
      * @param operationID retrieved from the previous call's response.
      * @param userInputs  built from the previous call's response, and the required user input.
-     * @return an {@link CreateTransferResponse}.
+     * @return an {@link CreatePullResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
     public CreatePullResponse createPull(ACH.CreatePull transfer, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
         return this.ach.createPull(transfer, accessToken, userSecret, operationID, userInputs);
+    }
+
+
+    /**
+     * getPull talks to the GetPull endpoint of Dapi, with this {@link DapiApp}'s appSecret,
+     * to continue a previous operation that required to provide some userInputs.
+     *
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @param operationID OperationID of the createPull request
+     * @param userInputs  built from the previous call's response, and the required user input.
+     * @return an {@link GetPullResponse}.
+     * @throws IOException in case of trouble happened while executing the request or reading the response.
+     */
+    public GetPullResponse getPull(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+        return this.ach.getPull(accessToken, userSecret, operationID, userInputs);
     }
 
 

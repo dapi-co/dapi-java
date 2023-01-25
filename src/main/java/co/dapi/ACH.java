@@ -1,6 +1,7 @@
 package co.dapi;
 
 import co.dapi.response.CreatePullResponse;
+import co.dapi.response.GetPullResponse;
 import co.dapi.types.UserInput;
 import com.google.gson.JsonSyntaxException;
 import java.io.IOException;
@@ -50,6 +51,38 @@ public class ACH {
         return resp;
     }
 
+    public GetPullResponse getPull(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+
+        // Create the request body of this call
+        GetPullRequest bodyObj = new GetPullRequest(this.config.getAppSecret(), userSecret, operationID, userInputs);
+
+        // Convert the request body to a JSON string
+        String bodyJson = DapiRequest.jsonAgent.toJson(bodyObj, GetPullRequest.class);
+
+        // Construct the headers needed for this request
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + accessToken);
+
+        // Make the request and get the response
+        String respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + bodyObj.action, headers);
+
+        // Convert the got response to the wanted response type
+        GetPullResponse resp = null;
+        try {
+            resp = DapiRequest.jsonAgent.fromJson(respJson, GetPullResponse.class);
+        } catch (JsonSyntaxException e) {
+            // Empty catch, cause the handling code is below
+        }
+
+        // Check if the got response was of unexpected format, and return a suitable response
+        if (resp == null || (resp.getStatus() == null && !resp.getType().isPresent())) {
+            // If the got response wasn't a JSON string, resp will be null, and if
+            // it didn't have the 'status' field, getStatus() will return null.
+            return new GetPullResponse("UNEXPECTED_RESPONSE", "Unexpected response body");
+        }
+
+        return resp;
+    }
 
     public static class CreatePull {
         private final String senderID;
@@ -95,6 +128,18 @@ public class ACH {
                                      UserInput[] userInputs) {
             super(appSecret, userSecret, operationID, userInputs);
             this.transfer = transfer;
+        }
+    }
+
+
+    private static class GetPullRequest extends DapiRequest.BaseRequest{
+        private final String action = "/ach/pull/get";
+
+        public GetPullRequest(String appSecret,
+                                String userSecret,
+                                String operationID,
+                                UserInput[] userInputs) {
+            super(appSecret, userSecret, operationID, userInputs);
         }
     }
 
