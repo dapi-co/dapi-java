@@ -85,9 +85,8 @@ public class ACH {
 
     private static class CreatePullRequest extends DapiRequest.BaseRequest {
         private final String action = "/ach/pull/create";
-        private final String senderID;
-        private final float amount;
-        private final String description;
+
+        private final CreatePull transfer;
 
         public CreatePullRequest(CreatePull transfer,
                                      String appSecret,
@@ -95,9 +94,7 @@ public class ACH {
                                      String operationID,
                                      UserInput[] userInputs) {
             super(appSecret, userSecret, operationID, userInputs);
-            this.senderID = transfer.senderID;
-            this.amount = transfer.amount;
-            this.description = transfer.description;
+            this.transfer = transfer;
         }
     }
 
