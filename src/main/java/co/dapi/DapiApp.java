@@ -4,10 +4,10 @@ import co.dapi.response.*;
 import co.dapi.types.UserInput;
 import com.google.gson.JsonSyntaxException;
 import okhttp3.Response;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
-
 
 
 /**
@@ -299,7 +299,6 @@ public class DapiApp {
         return this.m.getAccountsMetadata(accessToken, userSecret, operationID, userInputs);
     }
 
-
     /**
      * createPull talks to the CreatePull endpoint of Dapi, with this {@link DapiApp}'s appSecret,
      * to continue a previous operation that required to provide some userInputs.
@@ -316,7 +315,6 @@ public class DapiApp {
         return this.ach.createPull(transfer, accessToken, userSecret, operationID, userInputs);
     }
 
-
     /**
      * getPull talks to the GetPull endpoint of Dapi, with this {@link DapiApp}'s appSecret,
      * to continue a previous operation that required to provide some userInputs.
@@ -331,7 +329,6 @@ public class DapiApp {
     public GetPullResponse getPull(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
         return this.ach.getPull(accessToken, userSecret, operationID, userInputs);
     }
-
 
     /**
      * handleSDKRequest injects this {@link DapiApp}'s appSecret in the provided request body, bodyJson, and then

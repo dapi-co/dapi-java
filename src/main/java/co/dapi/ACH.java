@@ -4,6 +4,7 @@ import co.dapi.response.CreatePullResponse;
 import co.dapi.response.GetPullResponse;
 import co.dapi.types.UserInput;
 import com.google.gson.JsonSyntaxException;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Optional;
@@ -122,25 +123,23 @@ public class ACH {
         private final CreatePull transfer;
 
         public CreatePullRequest(CreatePull transfer,
-                                     String appSecret,
-                                     String userSecret,
-                                     String operationID,
-                                     UserInput[] userInputs) {
+                                 String appSecret,
+                                 String userSecret,
+                                 String operationID,
+                                 UserInput[] userInputs) {
             super(appSecret, userSecret, operationID, userInputs);
             this.transfer = transfer;
         }
     }
 
-
-    private static class GetPullRequest extends DapiRequest.BaseRequest{
+    private static class GetPullRequest extends DapiRequest.BaseRequest {
         private final String action = "/ach/pull/get";
 
         public GetPullRequest(String appSecret,
-                                String userSecret,
-                                String operationID,
-                                UserInput[] userInputs) {
+                              String userSecret,
+                              String operationID,
+                              UserInput[] userInputs) {
             super(appSecret, userSecret, operationID, userInputs);
         }
     }
-
 }
