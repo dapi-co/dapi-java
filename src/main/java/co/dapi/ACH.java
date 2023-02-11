@@ -17,7 +17,7 @@ public class ACH {
         this.config = config;
     }
 
-    public CreatePullResponse createPull(CreatePull transfer, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+    public CreatePullResponse createPull(PullTransfer transfer, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
         CreatePullRequest bodyObj = new CreatePullRequest(transfer, this.config.getAppSecret(), userSecret,
@@ -85,7 +85,7 @@ public class ACH {
         return resp;
     }
 
-    public static class CreatePull {
+    public static class PullTransfer {
         private final String senderID;
         private final float amount;
         private final String description;
@@ -98,7 +98,7 @@ public class ACH {
          * @param amount      the amount of money which should be pulled.
          * @param description description for the ACH pull.
          */
-        public CreatePull(String senderID, float amount, String description) {
+        public PullTransfer(String senderID, float amount, String description) {
             this.senderID = senderID;
             this.amount = amount;
             this.description = description;
@@ -120,9 +120,9 @@ public class ACH {
     private static class CreatePullRequest extends DapiRequest.BaseRequest {
         private final String action = "/ach/pull/create";
 
-        private final CreatePull transfer;
+        private final PullTransfer transfer;
 
-        public CreatePullRequest(CreatePull transfer,
+        public CreatePullRequest(PullTransfer transfer,
                                  String appSecret,
                                  String userSecret,
                                  String operationID,

@@ -311,7 +311,7 @@ public class DapiApp {
      * @return an {@link CreatePullResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
-    public CreatePullResponse createPull(ACH.CreatePull transfer, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+    public CreatePullResponse createPull(ACH.PullTransfer transfer, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
         return this.ach.createPull(transfer, accessToken, userSecret, operationID, userInputs);
     }
 
