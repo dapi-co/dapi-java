@@ -300,7 +300,7 @@ public class DapiApp {
     }
 
     /**
-     * createPull talks to the CreatePull endpoint of Dapi, with this {@link DapiApp}'s appSecret,
+     * createACHPull talks to the CreatePull endpoint of Dapi, with this {@link DapiApp}'s appSecret,
      * to continue a previous operation that required to provide some userInputs.
      *
      * @param transfer    the transfer details that we want to initiate.
@@ -311,22 +311,22 @@ public class DapiApp {
      * @return an {@link CreatePullResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
-    public CreatePullResponse createPull(ACH.PullTransfer transfer, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+    public CreatePullResponse createACHPull(ACH.PullTransfer transfer, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
         return this.ach.createPull(transfer, accessToken, userSecret, operationID, userInputs);
     }
 
     /**
-     * getPull talks to the GetPull endpoint of Dapi, with this {@link DapiApp}'s appSecret,
+     * getACHPull talks to the GetPull endpoint of Dapi, with this {@link DapiApp}'s appSecret,
      * to continue a previous operation that required to provide some userInputs.
      *
      * @param accessToken retrieved from the ExchangeToken process.
      * @param userSecret  retrieved from the user login.
-     * @param operationID OperationID of the createPull request
+     * @param operationID OperationID of the createACHPull request
      * @param userInputs  built from the previous call's response, and the required user input.
      * @return an {@link GetPullResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
-    public GetPullResponse getPull(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+    public GetPullResponse getACHPull(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
         return this.ach.getPull(accessToken, userSecret, operationID, userInputs);
     }
 
