@@ -1,7 +1,7 @@
 package co.dapi;
 
-import co.dapi.response.CreatePullResponse;
-import co.dapi.response.GetPullResponse;
+import co.dapi.response.CreateACHPullResponse;
+import co.dapi.response.GetACHPullResponse;
 import co.dapi.types.UserInput;
 import com.google.gson.JsonSyntaxException;
 
@@ -17,7 +17,7 @@ public class ACH {
         this.config = config;
     }
 
-    public CreatePullResponse createPull(PullTransfer transfer, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+    public CreateACHPullResponse createPull(PullTransfer transfer, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
         CreatePullRequest bodyObj = new CreatePullRequest(transfer, this.config.getAppSecret(), userSecret,
@@ -35,9 +35,9 @@ public class ACH {
 
 
         // Convert the got response to the wanted response type
-        CreatePullResponse resp = null;
+        CreateACHPullResponse resp = null;
         try {
-            resp = DapiRequest.jsonAgent.fromJson(respJson, CreatePullResponse.class);
+            resp = DapiRequest.jsonAgent.fromJson(respJson, CreateACHPullResponse.class);
         } catch (JsonSyntaxException e) {
             // Empty catch, cause the handling code is below
         }
@@ -46,13 +46,13 @@ public class ACH {
         if (resp == null || (resp.getStatus() == null && !resp.getType().isPresent())) {
             // If the got response wasn't a JSON string, resp will be null, and if
             // it didn't have the 'status' field, getStatus() will return null.
-            return new CreatePullResponse("UNEXPECTED_RESPONSE", "Unexpected response body");
+            return new CreateACHPullResponse("UNEXPECTED_RESPONSE", "Unexpected response body");
         }
 
         return resp;
     }
 
-    public GetPullResponse getPull(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+    public GetACHPullResponse getPull(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
 
         // Create the request body of this call
         GetPullRequest bodyObj = new GetPullRequest(this.config.getAppSecret(), userSecret, operationID, userInputs);
@@ -68,9 +68,9 @@ public class ACH {
         String respJson = DapiRequest.Do(bodyJson, DapiRequest.Dapi_URL + "/v2" + bodyObj.action, headers);
 
         // Convert the got response to the wanted response type
-        GetPullResponse resp = null;
+        GetACHPullResponse resp = null;
         try {
-            resp = DapiRequest.jsonAgent.fromJson(respJson, GetPullResponse.class);
+            resp = DapiRequest.jsonAgent.fromJson(respJson, GetACHPullResponse.class);
         } catch (JsonSyntaxException e) {
             // Empty catch, cause the handling code is below
         }
@@ -79,7 +79,7 @@ public class ACH {
         if (resp == null || (resp.getStatus() == null && !resp.getType().isPresent())) {
             // If the got response wasn't a JSON string, resp will be null, and if
             // it didn't have the 'status' field, getStatus() will return null.
-            return new GetPullResponse("UNEXPECTED_RESPONSE", "Unexpected response body");
+            return new GetACHPullResponse("UNEXPECTED_RESPONSE", "Unexpected response body");
         }
 
         return resp;

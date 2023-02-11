@@ -308,10 +308,10 @@ public class DapiApp {
      * @param userSecret  retrieved from the user login.
      * @param operationID retrieved from the previous call's response.
      * @param userInputs  built from the previous call's response, and the required user input.
-     * @return an {@link CreatePullResponse}.
+     * @return an {@link CreateACHPullResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
-    public CreatePullResponse createACHPull(ACH.PullTransfer transfer, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+    public CreateACHPullResponse createACHPull(ACH.PullTransfer transfer, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
         return this.ach.createPull(transfer, accessToken, userSecret, operationID, userInputs);
     }
 
@@ -323,10 +323,10 @@ public class DapiApp {
      * @param userSecret  retrieved from the user login.
      * @param operationID OperationID of the createACHPull request
      * @param userInputs  built from the previous call's response, and the required user input.
-     * @return an {@link GetPullResponse}.
+     * @return an {@link GetACHPullResponse}.
      * @throws IOException in case of trouble happened while executing the request or reading the response.
      */
-    public GetPullResponse getACHPull(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+    public GetACHPullResponse getACHPull(String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
         return this.ach.getPull(accessToken, userSecret, operationID, userInputs);
     }
 
