@@ -125,8 +125,7 @@ public class DapiApp {
     }
 
     /**
-     * getTransactions talks to the GetTransactions endpoint of Dapi, with this {@link DapiApp}'s appSecret,
-     * to continue a previous operation that required to provide some userInputs.
+     * getTransactions talks to the GetTransactions endpoint of Dapi, with this {@link DapiApp}'s appSecret.
      *
      * @param accountID   the id of the account which this operation is about.
      * @param fromDate    the start date of the transactions we want.
@@ -156,6 +155,72 @@ public class DapiApp {
      */
     public GetTransactionsResponse getTransactions(String accountID, LocalDate fromDate, LocalDate toDate, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
         return this.d.getTransactions(accountID, fromDate, toDate, accessToken, userSecret, operationID, userInputs);
+    }
+
+    /**
+     * getCategorizedTransactions talks to the GetCategorizedTransactions endpoint of Dapi, with this {@link DapiApp}'s appSecret.
+     *
+     * @param accountID   the id of the account which this operation is about.
+     * @param fromDate    the start date of the transactions we want.
+     * @param toDate      the end date of the transactions we want.
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @return an {@link GetTransactionsResponse}.
+     * @throws IOException in case of trouble happened while executing the request or reading the response.
+     */
+    public GetCategorizedTransactionsResponse getCategorizedTransactions(String accountID, LocalDate fromDate, LocalDate toDate, String accessToken, String userSecret) throws IOException {
+        return this.d.getCategorizedTransactions(accountID, fromDate, toDate, accessToken, userSecret, "", null);
+    }
+
+    /**
+     * getCategorizedTransactions talks to the GetCategorizedTransactions endpoint of Dapi, with this {@link DapiApp}'s appSecret,
+     * to continue a previous operation that required to provide some userInputs.
+     *
+     * @param accountID   the id of the account which this operation is about.
+     * @param fromDate    the start date of the transactions we want.
+     * @param toDate      the end date of the transactions we want.
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @param operationID retrieved from the previous call's response.
+     * @param userInputs  built from the previous call's response, and the required user input.
+     * @return an {@link GetTransactionsResponse}.
+     * @throws IOException in case of trouble happened while executing the request or reading the response.
+     */
+    public GetCategorizedTransactionsResponse getCategorizedTransactions(String accountID, LocalDate fromDate, LocalDate toDate, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+        return this.d.getCategorizedTransactions(accountID, fromDate, toDate, accessToken, userSecret, operationID, userInputs);
+    }
+
+    /**
+     * getCategorizedTransactions talks to the GetEnrichedTransactions endpoint of Dapi, with this {@link DapiApp}'s appSecret.
+     *
+     * @param accountID   the id of the account which this operation is about.
+     * @param fromDate    the start date of the transactions we want.
+     * @param toDate      the end date of the transactions we want.
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @return an {@link GetTransactionsResponse}.
+     * @throws IOException in case of trouble happened while executing the request or reading the response.
+     */
+    public GetEnrichedTransactionsResponse getEnrichedTransactions(String accountID, LocalDate fromDate, LocalDate toDate, String accessToken, String userSecret) throws IOException {
+        return this.d.getEnrichedTransactions(accountID, fromDate, toDate, accessToken, userSecret, "", null);
+    }
+
+    /**
+     * getCategorizedTransactions talks to the GetEnrichedTransactions endpoint of Dapi, with this {@link DapiApp}'s appSecret,
+     * to continue a previous operation that required to provide some userInputs.
+     *
+     * @param accountID   the id of the account which this operation is about.
+     * @param fromDate    the start date of the transactions we want.
+     * @param toDate      the end date of the transactions we want.
+     * @param accessToken retrieved from the ExchangeToken process.
+     * @param userSecret  retrieved from the user login.
+     * @param operationID retrieved from the previous call's response.
+     * @param userInputs  built from the previous call's response, and the required user input.
+     * @return an {@link GetTransactionsResponse}.
+     * @throws IOException in case of trouble happened while executing the request or reading the response.
+     */
+    public GetEnrichedTransactionsResponse getEnrichedTransactions(String accountID, LocalDate fromDate, LocalDate toDate, String accessToken, String userSecret, String operationID, UserInput[] userInputs) throws IOException {
+        return this.d.getEnrichedTransactions(accountID, fromDate, toDate, accessToken, userSecret, operationID, userInputs);
     }
 
     /**
