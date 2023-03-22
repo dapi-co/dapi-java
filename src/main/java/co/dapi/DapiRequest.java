@@ -61,13 +61,8 @@ public class DapiRequest {
             headersBuilder.set(header.getKey(), header.getValue());
         }
         headersBuilder.set("content-type", "application/json");
-        Package objPackage = co.dapi.DapiApp.class.getPackage();
-
-        String version = objPackage.getImplementationVersion() != null ? objPackage.getImplementationVersion() : LIBRARY_VERSION;
-        String artifactId = objPackage.getImplementationTitle() != null ? objPackage.getImplementationTitle() : LIBRARY;
-        headersBuilder.set("X-Dapi-Library-Version", version);
-        headersBuilder.set("X-Dapi-Library", artifactId);
-
+        headersBuilder.set("X-Dapi-Library-Version", LIBRARY_VERSION);
+        headersBuilder.set("X-Dapi-Library", LIBRARY);
 
         // Create the request
         RequestBody reqBody = RequestBody.create(bodyJson, MediaType.parse("application/json"));
