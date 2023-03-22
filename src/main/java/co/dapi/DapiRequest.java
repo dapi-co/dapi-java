@@ -15,8 +15,8 @@ public class DapiRequest {
     public final static String Dapi_URL = "https://api.dapi.com";
     public final static String DD_URL = "https://dd.dapi.com";
     public final static String SECURE_DD_URL = "https://dd.secure.dapi.com";
-    public final static String LIBRARY_VERSION = "1.6.0";
-    public final static String LIBRARY = "dapi-java";
+    private final static String LIBRARY_VERSION = "1.6.0";
+    private final static String LIBRARY = "dapi-java";
 
 
     final static Gson jsonAgent = new Gson().newBuilder()
