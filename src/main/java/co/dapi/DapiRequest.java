@@ -15,6 +15,9 @@ public class DapiRequest {
     public final static String Dapi_URL = "https://api.dapi.com";
     public final static String DD_URL = "https://dd.dapi.com";
     public final static String SECURE_DD_URL = "https://dd.secure.dapi.com";
+    private final static String LIBRARY_VERSION = "1.6.0";
+    private final static String LIBRARY = "dapi-java";
+
 
     final static Gson jsonAgent = new Gson().newBuilder()
             .disableHtmlEscaping()
@@ -58,6 +61,8 @@ public class DapiRequest {
             headersBuilder.set(header.getKey(), header.getValue());
         }
         headersBuilder.set("content-type", "application/json");
+        headersBuilder.set("X-Dapi-Library-Version", LIBRARY_VERSION);
+        headersBuilder.set("X-Dapi-Library", LIBRARY);
 
         // Create the request
         RequestBody reqBody = RequestBody.create(bodyJson, MediaType.parse("application/json"));
