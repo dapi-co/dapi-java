@@ -33,7 +33,7 @@ class TimeoutInterceptor implements Interceptor {
 
     public static boolean maxTimeoutEnabled(String endpoint) {
         for (String maxTimeoutEndpoint : maxTimeoutEndpoints) {
-            if (maxTimeoutEndpoint.contains(endpoint)) {
+            if (endpoint.contains(maxTimeoutEndpoint)) {
                 return true;
             }
         }
