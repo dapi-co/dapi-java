@@ -30,7 +30,7 @@ public class ExampleApplication {
     @PostConstruct
     public void init() {
         // Replace YOUR_APP_SECRET with the appSecret of your Dapi app
-        dapiApp = new DapiApp(new Config("YOUR_APPSECRET"));
+        dapiApp = new DapiApp(new Config("f40c424fd4a9c92bdc283371716ba13284ad48514ab0b879c0f7939b470cebe7"));
     }
 
     @RequestMapping(

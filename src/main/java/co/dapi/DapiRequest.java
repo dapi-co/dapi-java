@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import okio.Buffer;
 
 public class DapiRequest {
     public final static String Dapi_URL = "https://api.dapi.com";
@@ -25,9 +26,8 @@ public class DapiRequest {
             .create();
 
     private final static OkHttpClient httpClient = new OkHttpClient().newBuilder()
-            .readTimeout(2, TimeUnit.MINUTES)
+            .addInterceptor(new TimeoutInterceptor(jsonAgent))
             .build();
-
 
     public static Response HandleSDK(String bodyJson, HashMap<String, String> headersMap) throws IOException {
         headersMap.put("host", "dd.dapi.com");
