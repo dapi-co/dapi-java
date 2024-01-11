@@ -3,10 +3,17 @@ package co.dapi.types;
 import java.util.Optional;
 
 public class UserInput {
-    private final UserInputID id;
-    private final int index;
-    private final String query;
-    private final String answer;
+    private UserInputID id;
+    private int index;
+    private String query;
+    private String answer;
+
+    /**
+     * Creates an empty UserInput object.
+     *
+     */
+    public UserInput() {
+    }
 
     /**
      * Creates a UserInput object with all of its info.
@@ -51,11 +58,25 @@ public class UserInput {
     }
 
     /**
+     * Sets the id field.
+     */
+    public void setId(UserInputID id) {
+        this.id = id;
+    }
+
+    /**
      * returns the index of this UserInput, starting from 0.
      * will always be 0 if only one input is requested.
      */
     public int getIndex() {
         return index;
+    }
+
+    /**
+     * Sets the index.
+     */
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     /**
@@ -66,11 +87,25 @@ public class UserInput {
     }
 
     /**
+     * Sets the query.
+     */
+    public void setQuery(String query) {
+        this.query = query;
+    }
+
+    /**
      * returns the UserInput that must be submitted.
      * in the response it will always be empty.
      */
     public Optional<String> getAnswer() {
         return Optional.ofNullable(answer);
+    }
+
+    /**
+     * Sets the answer.
+     */
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
     public enum UserInputID {
